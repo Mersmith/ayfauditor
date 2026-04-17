@@ -26,22 +26,19 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 
 ## 4. Sistema de Comunicación (Chat por Pregunta)
 - **ComentarioRespuesta**: Permite discutir dudas sobre una pregunta específica.
-  - Campos: 
-    - `respuesta_id` (FK).
-    - `user_id` (FK - Quién escribe).
-    - `mensaje` (text).
-    - `leido` (boolean).
-  - *Notificación automática al usuario contrario al recibir un mensaje.*
+  - Campos: `respuesta_id` (FK), `user_id` (FK), `mensaje` (text), `leido`.
 
 ## 5. Gestión de Archivos y Evidencias
-- **Media (Polimorfismo)**: 
-  - Vinculado a la tabla `respuestas`.
+- **Media (Polimorfismo)**: Vinculado a la tabla `respuestas`.
   - Campos: `file_path`, `file_name`, `mime_type`, `size`.
 
-## 6. Reglas de Integridad y Flujo
-- **SoftDeletes**: Activo en Clientes, Empresas y Auditorías.
-- **Unicidad**: `tax_id` en Empresas y `dni_personal` en Clientes.
-- **Flujo de Respuesta**:
-  1. Auditor abre la Auditoría -> Se generan las 40 respuestas vacías.
-  2. Cliente responde, sube media y puede preguntar vía chat de la respuesta.
-  3. Auditor revisa, comenta y aprueba u observa.
+## 6. Trazabilidad e Historial (Logs)
+- **ActivityLog**: Registro de auditoría interna del sistema.
+  - **Propósito**: Saber quién cambió un estado, quién subió un archivo o quién modificó una respuesta.
+  - Campos: `user_id`, `accion` (ej: "Aprobar Respuesta"), `modelo_afectado`, `valor_anterior`, `valor_nuevo`.
+- **Historial de Auditoría**: Captura de fechas exactas de cambios de estado (Workflow timeline).
+
+## 7. Reglas de Integridad y Flujo
+- **SoftDeletes**: Activo en Clientes, Empresas y Auditorías para preservar evidencia histórica.
+- **Unicidad**: El `tax_id` empresarial y el `dni_personal` son llaves únicas.
+- **Entregables**: El sistema debe permitir generar un **PDF consolidado** con todas las respuestas y evidencias al finalizar.
