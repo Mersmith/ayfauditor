@@ -11,12 +11,20 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 ## 2. Estructura de Empresas
 - **Empresa**: Entidad legal/fiscal.
   - Campos: `cliente_id` (FK), `razon_social`, `nombre_comercial`, `tax_id` (RUC/NIT/RFC - Único), `direccion_fiscal`.
+- **PersonalEmpresa**: Relación entre trabajadores y la empresa.
+  - Campos: `empresa_id` (FK), `user_id` (FK), `cargo`, `activo` (boolean).
 
 ## 3. Módulo de Auditoría (Colaborativo)
 - **Pregunta**: Banco de preguntas maestras.
   - Campos: `orden`, `texto`, `categoria`, `descripcion_ayuda`.
 - **Auditoria**: Sesión de inspección para una empresa y periodo específico.
   - Campos: `empresa_id` (FK), `titulo`, `estado` (Pendiente, En Proceso, Finalizada), `fecha_inicio`, `fecha_fin`.
+- **ParticipanteAuditoria**: Usuarios vinculados a una sesión de auditoría.
+  - **Tipos de Participantes**: 
+    - **Admin**: Auditor/Gestor del sistema AyfAuditor.
+    - **Empresario**: El Cliente principal dueño del negocio.
+    - **Personal**: Trabajadores de la empresa del cliente invitados a colaborar.
+  - Campos: `auditoria_id` (FK), `user_id` (FK), `rol` (ej: 'Dueño', 'Colaborador', 'Auditor'), `invitado_por` (FK - User).
 - **Respuesta**: El espacio de colaboración.
   - Campos:
     - `auditoria_id` (FK), `pregunta_id` (FK).
