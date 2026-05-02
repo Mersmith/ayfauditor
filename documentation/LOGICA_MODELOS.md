@@ -3,6 +3,11 @@ php artisan make:livewire erp.cliente.cliente-lista --class
 php artisan make:livewire erp.cliente.cliente-crear --class
 php artisan make:livewire erp.cliente.cliente-editar --class
 
+php artisan make:model TipoDocumentoEmpresa -mfsc
+php artisan make:livewire erp.tipo-documento-empresa.tipo-documento-empresa-lista --class
+php artisan make:livewire erp.tipo-documento-empresa.tipo-documento-empresa-crear --class
+php artisan make:livewire erp.tipo-documento-empresa.tipo-documento-empresa-editar --class
+
 php artisan make:model Empresa -mfsc
 php artisan make:livewire erp.empresa.empresa-lista --class
 php artisan make:livewire erp.empresa.empresa-crear --class

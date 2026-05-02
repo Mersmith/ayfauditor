@@ -15,9 +15,10 @@ class Empresa extends Model
 
     protected $fillable = [
         'cliente_id',
+        'tipo_documento_empresa_id',
         'razon_social',
         'nombre_comercial',
-        'tax_id',
+        'numero_documento',
         'direccion_fiscal',
         'activo',
     ];
@@ -25,6 +26,14 @@ class Empresa extends Model
     protected $casts = [
         'activo' => 'boolean',
     ];
+
+    /**
+     * El tipo de documento legal de la empresa.
+     */
+    public function tipoDocumento(): BelongsTo
+    {
+        return $this->belongsTo(TipoDocumentoEmpresa::class, 'tipo_documento_empresa_id');
+    }
 
     /**
      * Una empresa pertenece a un cliente principal.

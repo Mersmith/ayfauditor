@@ -15,17 +15,18 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('tipo_documento_empresa_id')->constrained('tipo_documento_empresas')->onDelete('restrict');
 
             $table->string('razon_social');
             $table->string('nombre_comercial')->nullable();
-            $table->string('tax_id')->comment('RUC/NIT/RFC - Único');
+            $table->string('numero_documento');
             $table->string('direccion_fiscal')->nullable();
             $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['tax_id', 'deleted_at']);
+            $table->unique(['numero_documento', 'deleted_at']);
         });
     }
 
