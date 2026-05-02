@@ -16,9 +16,10 @@
         &nbsp;&nbsp;||&nbsp;&nbsp;
 
         <strong>🏢 Empresas:</strong>
-        <a href="{{ route('erp.empresa.vista.lista') }}">Lista</a> |
-        <a href="{{ route('erp.empresa.vista.crear') }}">Nueva</a>
-
+        <a href="{{ route('erp.empresa.vista.lista') }}">Lista</a> | 
+        <a href="{{ route('erp.empresa.vista.crear') }}">Nueva</a> |
+        <a href="{{ route('erp.personal.vista.lista') }}">Personal</a>
+        
         &nbsp;&nbsp;||&nbsp;&nbsp;
 
         <strong>⚙️ Configuración:</strong>

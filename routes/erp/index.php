@@ -17,6 +17,10 @@ use App\Livewire\Erp\Especialidad\EspecialidadCrear;
 use App\Livewire\Erp\Especialidad\EspecialidadEditar;
 use App\Livewire\Erp\Especialidad\EspecialidadLista;
 
+use App\Livewire\Erp\Personal\PersonalCrear;
+use App\Livewire\Erp\Personal\PersonalEditar;
+use App\Livewire\Erp\Personal\PersonalLista;
+
 Route::prefix('cliente')->name('cliente.vista.')->group(function () {
     Route::get('/', ClienteLista::class)->name('lista');
     Route::get('/crear', ClienteCrear::class)->name('crear');
@@ -33,6 +37,12 @@ Route::prefix('empresa')->name('empresa.vista.')->group(function () {
     Route::get('/', EmpresaLista::class)->name('lista');
     Route::get('/crear', EmpresaCrear::class)->name('crear');
     Route::get('/editar/{id}', EmpresaEditar::class)->name('editar');
+});
+
+Route::prefix('personal')->name('personal.vista.')->group(function () {
+    Route::get('/', PersonalLista::class)->name('lista');
+    Route::get('/crear', PersonalCrear::class)->name('crear');
+    Route::get('/editar/{id}', PersonalEditar::class)->name('editar');
 });
 
 Route::prefix('cargo')->name('cargo.vista.')->group(function () {

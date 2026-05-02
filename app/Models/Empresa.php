@@ -49,7 +49,7 @@ class Empresa extends Model
     public function personal()
     {
         return $this->belongsToMany(Personal::class, 'personal_empresas')
-            ->withPivot('cargo', 'activo')
+            ->withPivot('cargo_id', 'activo')
             ->withTimestamps();
     }
 
