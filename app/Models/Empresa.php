@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empresa extends Model
@@ -26,5 +27,23 @@ class Empresa extends Model
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    /**
+     * El personal que trabaja en esta empresa.
+     */
+    public function personal()
+    {
+        return $this->belongsToMany(Personal::class, 'personal_empresas')
+            ->withPivot('cargo', 'activo')
+            ->withTimestamps();
+    }
+
+    /**
+     * Relación directa con la tabla pivote.
+     */
+    public function personalEmpresas(): HasMany
+    {
+        return $this->hasMany(PersonalEmpresa::class);
     }
 }

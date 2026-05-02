@@ -19,7 +19,7 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
   - **Relación**: Un Cliente (persona) puede registrar y gestionar múltiples Empresas (Relación 1:N).
   - Campos: `cliente_id` (FK), `razon_social`, `nombre_comercial`, `tax_id` (RUC/NIT/RFC - Único), `direccion_fiscal`.
 - **PersonalEmpresa**: Relación entre trabajadores y la empresa.
-  - Campos: `empresa_id` (FK), `user_id` (FK), `cargo`, `activo` (boolean).
+  - Campos: `empresa_id` (FK), `personal_id` (FK), `cargo`, `activo` (boolean).
 
 ## 3. Módulo de Auditoría (Colaborativo)
 - **Pregunta**: Banco de preguntas maestras.
