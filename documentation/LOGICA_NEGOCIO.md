@@ -5,7 +5,7 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 ## 1. Identidad y Acceso
 - **User**: Únicamente para Login (Email/Password).
 - **Cliente**: Perfil humano (Persona física, dueño o representante. Relación 1:1 con User).
-  - Campos: `user_id`, `nombre`, `dni_personal`, `telefono`, `avatar`.
+  - Campos: `user_id`, `nombre`, `dni`, `celular`.
   - *El Cliente es la persona que accede al portal. Este cliente puede estar relacionado a **una o más empresas** simultáneamente.*
 
 ## 2. Estructura de Empresas

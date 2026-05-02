@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Empresa extends Model
+{
+    /** @use HasFactory<\Database\Factories\EmpresaFactory> */
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'cliente_id',
+        'razon_social',
+        'nombre_comercial',
+        'tax_id',
+        'direccion_fiscal',
+    ];
+
+    /**
+     * Una empresa pertenece a un cliente principal.
+     */
+    public function cliente(): BelongsTo
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+}
