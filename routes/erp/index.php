@@ -16,7 +16,9 @@ use App\Livewire\Erp\Cargo\CargoLista;
 use App\Livewire\Erp\Especialidad\EspecialidadCrear;
 use App\Livewire\Erp\Especialidad\EspecialidadEditar;
 use App\Livewire\Erp\Especialidad\EspecialidadLista;
-
+use App\Livewire\Erp\Trabajador\TrabajadorCrear;
+use App\Livewire\Erp\Trabajador\TrabajadorEditar;
+use App\Livewire\Erp\Trabajador\TrabajadorLista;
 use App\Livewire\Erp\Personal\PersonalCrear;
 use App\Livewire\Erp\Personal\PersonalEditar;
 use App\Livewire\Erp\Personal\PersonalLista;
@@ -55,4 +57,10 @@ Route::prefix('especialidad')->name('especialidad.vista.')->group(function () {
     Route::get('/', EspecialidadLista::class)->name('lista');
     Route::get('/crear', EspecialidadCrear::class)->name('crear');
     Route::get('/editar/{id}', EspecialidadEditar::class)->name('editar');
+});
+
+Route::prefix('trabajador')->name('trabajador.vista.')->group(function () {
+    Route::get('/', TrabajadorLista::class)->name('lista');
+    Route::get('/crear', TrabajadorCrear::class)->name('crear');
+    Route::get('/editar/{id}', TrabajadorEditar::class)->name('editar');
 });

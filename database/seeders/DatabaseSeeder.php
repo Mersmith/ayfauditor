@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             EmpresaSeeder::class,
             PersonalSeeder::class,
             PersonalEmpresaSeeder::class,
+            TrabajadorSeeder::class,
         ]);
     }
 }
