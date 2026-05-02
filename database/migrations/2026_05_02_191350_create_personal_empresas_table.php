@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->foreignId('empresa_id')->constrained('empresas')->onDelete('cascade');
             $table->foreignId('personal_id')->constrained('personals')->onDelete('cascade');
+            $table->foreignId('cargo_id')->nullable()->constrained('cargos')->onDelete('set null');
 
-            $table->string('cargo')->nullable();
             $table->boolean('activo')->default(true);
 
             $table->timestamps();

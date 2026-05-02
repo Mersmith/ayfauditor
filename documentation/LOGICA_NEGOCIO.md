@@ -5,7 +5,7 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 ## 1. Identidad y Acceso
 - **User**: Únicamente para Login (Email/Password).
 - **Trabajador**: Perfil humano del staff de AyfAuditor (Interno).
-  - Campos: `user_id`, `nombre`, `dni`, `especialidad`, `registro_profesional`.
+  - Campos: `user_id`, `nombre`, `dni`, `especialidad_id` (FK), `cargo_id` (FK), `registro_profesional`.
   - *El Trabajador es el personal interno que puede tener roles como Admin, Auditor, etc.*
 - **Cliente**: Perfil humano del dueño o representante (Externo).
   - Campos: `user_id`, `nombre`, `dni`, `celular`.
@@ -14,14 +14,20 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
   - Campos: `user_id`, `nombre`, `dni`, `celular`.
   - *El Personal son los empleados invitados por el Cliente para ayudar en la auditoría.*
 
-## 2. Estructura de Empresas
+## 2. Tablas Maestras
+- **Cargo**: Definición de puestos (ej: Gerente, Contador, Auditor).
+  - Campos: `nombre`, `descripcion`.
+- **Especialidad**: Definición de áreas técnicas (ej: Tributaria, Sistemas, Contable).
+  - Campos: `nombre`, `descripcion`.
+
+## 3. Estructura de Empresas
 - **Empresa**: Entidad legal/fiscal a la cual se le realiza la auditoría.
   - **Relación**: Un Cliente (persona) puede registrar y gestionar múltiples Empresas (Relación 1:N).
   - Campos: `cliente_id` (FK), `razon_social`, `nombre_comercial`, `tax_id` (RUC/NIT/RFC - Único), `direccion_fiscal`.
 - **PersonalEmpresa**: Relación entre trabajadores y la empresa.
-  - Campos: `empresa_id` (FK), `personal_id` (FK), `cargo`, `activo` (boolean).
+  - Campos: `empresa_id` (FK), `personal_id` (FK), `cargo_id` (FK), `activo` (boolean).
 
-## 3. Módulo de Auditoría (Colaborativo)
+## 4. Módulo de Auditoría (Colaborativo)
 - **Pregunta**: Banco de preguntas maestras.
   - Campos: `orden`, `texto`, `categoria`, `descripcion_ayuda`.
 - **Auditoria**: Sesión de inspección para una empresa y periodo específico.

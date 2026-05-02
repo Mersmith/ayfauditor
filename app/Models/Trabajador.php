@@ -15,7 +15,8 @@ class Trabajador extends Model
         'user_id',
         'nombre',
         'dni',
-        'especialidad',
+        'especialidad_id',
+        'cargo_id',
         'registro_profesional',
     ];
 
@@ -25,5 +26,21 @@ class Trabajador extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * El trabajador tiene una especialidad técnica.
+     */
+    public function especialidad(): BelongsTo
+    {
+        return $this->belongsTo(Especialidad::class);
+    }
+
+    /**
+     * El trabajador tiene un cargo en el staff interno.
+     */
+    public function cargo(): BelongsTo
+    {
+        return $this->belongsTo(Cargo::class);
     }
 }

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nombre');
             $table->string('dni')->nullable();
-            $table->string('especialidad')->nullable();
+
+            $table->foreignId('especialidad_id')->nullable()->constrained('especialidads')->onDelete('set null');
+            $table->foreignId('cargo_id')->nullable()->constrained('cargos')->onDelete('set null');
+
             $table->string('registro_profesional')->nullable();
 
             $table->timestamps();

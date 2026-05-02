@@ -14,7 +14,7 @@ class PersonalEmpresa extends Model
     protected $fillable = [
         'empresa_id',
         'personal_id',
-        'cargo',
+        'cargo_id',
         'activo',
     ];
 
@@ -32,5 +32,13 @@ class PersonalEmpresa extends Model
     public function personal(): BelongsTo
     {
         return $this->belongsTo(Personal::class);
+    }
+
+    /**
+     * El personal tiene un cargo específico dentro de esa empresa.
+     */
+    public function cargo(): BelongsTo
+    {
+        return $this->belongsTo(Cargo::class);
     }
 }
