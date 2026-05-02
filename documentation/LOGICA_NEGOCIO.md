@@ -4,12 +4,13 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 
 ## 1. Identidad y Acceso
 - **User**: Únicamente para Login (Email/Password).
-- **Cliente**: Perfil humano (Relación 1:1 con User).
+- **Cliente**: Perfil humano (Persona física, dueño o representante. Relación 1:1 con User).
   - Campos: `user_id`, `nombre`, `dni_personal`, `telefono`, `avatar`.
-  - *El Cliente es el usuario que accede al portal para responder la auditoría.*
+  - *El Cliente es la persona que accede al portal. Este cliente puede estar relacionado a **una o más empresas** simultáneamente.*
 
 ## 2. Estructura de Empresas
-- **Empresa**: Entidad legal/fiscal.
+- **Empresa**: Entidad legal/fiscal a la cual se le realiza la auditoría.
+  - **Relación**: Un Cliente (persona) puede registrar y gestionar múltiples Empresas (Relación 1:N).
   - Campos: `cliente_id` (FK), `razon_social`, `nombre_comercial`, `tax_id` (RUC/NIT/RFC - Único), `direccion_fiscal`.
 - **PersonalEmpresa**: Relación entre trabajadores y la empresa.
   - Campos: `empresa_id` (FK), `user_id` (FK), `cargo`, `activo` (boolean).
