@@ -4,9 +4,15 @@ Este documento define la estructura y reglas de negocio para el sistema **AyfAud
 
 ## 1. Identidad y Acceso
 - **User**: Únicamente para Login (Email/Password).
-- **Cliente**: Perfil humano (Persona física, dueño o representante. Relación 1:1 con User).
+- **Trabajador**: Perfil humano del staff de AyfAuditor (Interno).
+  - Campos: `user_id`, `nombre`, `dni`, `especialidad`, `registro_profesional`.
+  - *El Trabajador es el personal interno que puede tener roles como Admin, Auditor, etc.*
+- **Cliente**: Perfil humano del dueño o representante (Externo).
   - Campos: `user_id`, `nombre`, `dni`, `celular`.
-  - *El Cliente es la persona que accede al portal. Este cliente puede estar relacionado a **una o más empresas** simultáneamente.*
+  - *El Cliente es la persona que contrata el servicio y gestiona sus empresas.*
+- **Personal**: Perfil humano de trabajadores de la empresa auditada (Externo).
+  - Campos: `user_id`, `nombre`, `dni`, `celular`.
+  - *El Personal son los empleados invitados por el Cliente para ayudar en la auditoría.*
 
 ## 2. Estructura de Empresas
 - **Empresa**: Entidad legal/fiscal a la cual se le realiza la auditoría.

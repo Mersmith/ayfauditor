@@ -42,6 +42,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Un usuario puede tener un perfil de trabajador (staff interno).
+     */
+    public function trabajador(): HasOne
+    {
+        return $this->hasOne(Trabajador::class);
+    }
+
+    /**
+     * Un usuario puede tener un perfil de personal (colaborador externo).
+     */
+    public function personal(): HasOne
+    {
+        return $this->hasOne(Personal::class);
+    }
+
+    /**
      * Get the user's initials
      */
     public function initials(): string
