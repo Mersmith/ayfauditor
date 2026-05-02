@@ -23,6 +23,8 @@
 
         <strong>⚙️ Configuración:</strong>
         <a href="{{ route('erp.tipo-documento-empresa.vista.lista') }}">Tipos Documento</a>
+        <a href="{{ route('erp.cargo.vista.lista') }}">Cargos</a>
+        <a href="{{ route('erp.especialidad.vista.lista') }}">Especialidades</a>
     </nav>
 
     <hr>

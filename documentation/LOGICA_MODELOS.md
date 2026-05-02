@@ -18,6 +18,16 @@ php artisan make:livewire erp.personal-empresa.personal-empresa-lista --class
 php artisan make:livewire erp.personal-empresa.personal-empresa-crear --class
 php artisan make:livewire erp.personal-empresa.personal-empresa-editar --class
 
+php artisan make:model Cargo -mfsc
+php artisan make:livewire erp.cargo.cargo-lista --class
+php artisan make:livewire erp.cargo.cargo-crear --class
+php artisan make:livewire erp.cargo.cargo-editar --class
+
+php artisan make:model Especialidad -mfsc
+php artisan make:livewire erp.especialidad.especialidad-lista --class
+php artisan make:livewire erp.especialidad.especialidad-crear --class
+php artisan make:livewire erp.especialidad.especialidad-editar --class
+
 php artisan make:model Auditoria -mfsc
 php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class
