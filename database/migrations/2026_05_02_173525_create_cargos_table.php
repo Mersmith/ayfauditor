@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
+            $table->boolean('activo')->default(true);
             $table->text('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();

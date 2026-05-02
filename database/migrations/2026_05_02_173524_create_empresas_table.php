@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('razon_social');
             $table->string('nombre_comercial')->nullable();
             $table->string('tax_id')->comment('RUC/NIT/RFC - Único');
-            $table->text('direccion_fiscal')->nullable();
+            $table->string('direccion_fiscal')->nullable();
+            $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();

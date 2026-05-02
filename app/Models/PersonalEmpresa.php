@@ -18,6 +18,10 @@ class PersonalEmpresa extends Model
         'activo',
     ];
 
+    protected $casts = [
+        'activo' => 'boolean',
+    ];
+
     /**
      * Pertenece a una empresa específica.
      */

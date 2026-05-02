@@ -18,6 +18,11 @@ class Trabajador extends Model
         'especialidad_id',
         'cargo_id',
         'registro_profesional',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     /**

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('cargo_id')->nullable()->constrained('cargos')->onDelete('set null');
 
             $table->string('registro_profesional')->nullable();
+            $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();

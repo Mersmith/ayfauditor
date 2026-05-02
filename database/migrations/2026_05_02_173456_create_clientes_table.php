@@ -18,6 +18,7 @@ return new class extends Migration {
 
             $table->string('dni')->nullable();
             $table->string('celular')->nullable();
+            $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();

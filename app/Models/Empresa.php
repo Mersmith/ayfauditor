@@ -19,6 +19,11 @@ class Empresa extends Model
         'nombre_comercial',
         'tax_id',
         'direccion_fiscal',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     /**

@@ -18,6 +18,11 @@ class Cliente extends Model
         'nombre',
         'dni',
         'celular',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     /**

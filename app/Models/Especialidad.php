@@ -10,5 +10,9 @@ class Especialidad extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'descripcion', 'activo'];
+
+    protected $casts = [
+        'activo' => 'boolean',
+    ];
 }
