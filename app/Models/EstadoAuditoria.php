@@ -13,7 +13,13 @@ class EstadoAuditoria extends Model
     protected $fillable = [
         'nombre',
         'color',
+        'icono',
         'descripcion',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     public function auditorias()

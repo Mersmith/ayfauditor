@@ -27,7 +27,8 @@
         <a href="{{ route('erp.tipo-documento-empresa.vista.lista') }}">Tipos Documento</a> |
         <a href="{{ route('erp.cargo.vista.lista') }}">Cargos</a> |
         <a href="{{ route('erp.especialidad.vista.lista') }}">Especialidades</a> |
-        <a href="{{ route('erp.categoria-pregunta.vista.lista') }}">Categorías Preguntas</a>
+        <a href="{{ route('erp.categoria-pregunta.vista.lista') }}">Categorías Preguntas</a> |
+        <a href="{{ route('erp.estado-auditoria.vista.lista') }}">Estados Auditoría</a>
     </nav>
 
     <hr>

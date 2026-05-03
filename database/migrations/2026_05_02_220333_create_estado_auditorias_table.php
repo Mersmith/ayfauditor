@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
-            $table->string('color')->nullable()->comment('Ej: #ff0000, primary, success');
             $table->text('descripcion')->nullable();
+            $table->string('color')->nullable(); // #000000
+            $table->string('icono')->nullable(); // fa-solid fa-gear
+            $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();

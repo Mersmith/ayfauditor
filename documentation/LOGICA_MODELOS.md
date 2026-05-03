@@ -38,6 +38,11 @@ php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-lista --clas
 php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-crear --class
 php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-editar --class
 
+php artisan make:model EstadoAuditoria -mfsc
+php artisan make:livewire erp.estado-auditoria.estado-auditoria-lista --class
+php artisan make:livewire erp.estado-auditoria.estado-auditoria-crear --class
+php artisan make:livewire erp.estado-auditoria.estado-auditoria-editar --class
+
 php artisan make:model Auditoria -mfsc
 php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class

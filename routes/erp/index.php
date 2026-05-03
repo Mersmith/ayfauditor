@@ -15,6 +15,9 @@ use App\Livewire\Erp\Empresa\EmpresaLista;
 use App\Livewire\Erp\Especialidad\EspecialidadCrear;
 use App\Livewire\Erp\Especialidad\EspecialidadEditar;
 use App\Livewire\Erp\Especialidad\EspecialidadLista;
+use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaCrear;
+use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaEditar;
+use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaLista;
 use App\Livewire\Erp\Personal\PersonalCrear;
 use App\Livewire\Erp\Personal\PersonalEditar;
 use App\Livewire\Erp\Personal\PersonalLista;
@@ -72,4 +75,10 @@ Route::prefix('categoria-pregunta')->name('categoria-pregunta.vista.')->group(fu
     Route::get('/', CategoriaPreguntaLista::class)->name('lista');
     Route::get('/crear', CategoriaPreguntaCrear::class)->name('crear');
     Route::get('/editar/{id}', CategoriaPreguntaEditar::class)->name('editar');
+});
+
+Route::prefix('estado-auditoria')->name('estado-auditoria.vista.')->group(function () {
+    Route::get('/', EstadoAuditoriaLista::class)->name('lista');
+    Route::get('/crear', EstadoAuditoriaCrear::class)->name('crear');
+    Route::get('/editar/{id}', EstadoAuditoriaEditar::class)->name('editar');
 });
