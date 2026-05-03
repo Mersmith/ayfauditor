@@ -141,6 +141,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-personal' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-personal.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
