@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->unique(); // Ej: RUC, NIT, RFC
             $table->string('abreviatura', 10)->nullable();
+            $table->string('color')->nullable();
+            $table->string('icono')->nullable(); // fa-solid fa-gear
             $table->boolean('activo')->default(true);
             $table->timestamps();
             $table->softDeletes();

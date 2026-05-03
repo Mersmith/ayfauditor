@@ -15,6 +15,18 @@
         </div>
 
         <div>
+            <label>Color:</label>
+            <input type="text" wire:model="color" placeholder="Ej: red, #00FF00">
+            @error('color') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Icono (FontAwesome):</label>
+            <input type="text" wire:model="icono" placeholder="Ej: fa-solid fa-user">
+            @error('icono') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <label>Activo:</label>
             <input type="checkbox" wire:model="activo">
         </div>

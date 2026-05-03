@@ -14,6 +14,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Icono</th>
+                <th>Color</th>
                 <th>Activo</th>
                 <th>Acciones</th>
             </tr>
@@ -23,6 +25,11 @@
                 <tr>
                     <td>{{ $cargo->nombre }}</td>
                     <td>{{ $cargo->descripcion }}</td>
+                    <td><i class="{{ $cargo->icono }}"></i> {{ $cargo->icono }}</td>
+                    <td>
+                        <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $cargo->color }}; border: 1px solid #ccc; vertical-align: middle;"></span>
+                        {{ $cargo->color }}
+                    </td>
                     <td>{{ $cargo->activo ? 'Sí' : 'No' }}</td>
                     <td>
                         <a href="{{ route('erp.cargo.vista.editar', $cargo->id) }}">Editar</a>

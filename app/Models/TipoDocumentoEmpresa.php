@@ -13,6 +13,8 @@ class TipoDocumentoEmpresa extends Model
     protected $fillable = [
         'nombre',
         'abreviatura',
+        'color',
+        'icono',
         'activo',
     ];
 

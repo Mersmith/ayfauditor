@@ -15,7 +15,13 @@ class CargoEditar extends Component
     public Cargo $cargo;
 
     public string $nombre = '';
+
     public string $descripcion = '';
+
+    public string $color = '';
+
+    public string $icono = '';
+
     public bool $activo = true;
 
     public function mount($id)
@@ -23,6 +29,8 @@ class CargoEditar extends Component
         $this->cargo = Cargo::findOrFail($id);
         $this->nombre = $this->cargo->nombre;
         $this->descripcion = $this->cargo->descripcion ?? '';
+        $this->color = $this->cargo->color ?? '';
+        $this->icono = $this->cargo->icono ?? '';
         $this->activo = $this->cargo->activo;
     }
 
@@ -31,6 +39,8 @@ class CargoEditar extends Component
         return [
             'nombre' => ['required', 'string', 'max:255', Rule::unique('cargos', 'nombre')->ignore($this->cargo->id)],
             'descripcion' => ['nullable', 'string'],
+            'color' => ['nullable', 'string', 'max:50'],
+            'icono' => ['nullable', 'string', 'max:100'],
             'activo' => ['boolean'],
         ];
     }
@@ -42,6 +52,8 @@ class CargoEditar extends Component
         $this->cargo->update([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
+            'color' => $this->color,
+            'icono' => $this->icono,
             'activo' => $this->activo,
         ]);
 
@@ -54,6 +66,7 @@ class CargoEditar extends Component
     {
         $this->cargo->delete();
         session()->flash('success', 'Cargo eliminado.');
+
         return $this->redirect(route('erp.cargo.vista.lista'), navigate: true);
     }
 

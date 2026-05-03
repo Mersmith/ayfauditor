@@ -10,7 +10,7 @@ class Cargo extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['nombre', 'descripcion', 'activo'];
+    protected $fillable = ['nombre', 'descripcion', 'color', 'icono', 'activo'];
 
     protected $casts = [
         'activo' => 'boolean',

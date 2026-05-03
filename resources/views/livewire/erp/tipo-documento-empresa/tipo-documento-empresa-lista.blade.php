@@ -14,6 +14,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Abreviatura</th>
+                <th>Icono</th>
+                <th>Color</th>
                 <th>Activo</th>
                 <th>Acciones</th>
             </tr>
@@ -23,6 +25,11 @@
                 <tr>
                     <td>{{ $tipo->nombre }}</td>
                     <td>{{ $tipo->abreviatura }}</td>
+                    <td><i class="{{ $tipo->icono }}"></i> {{ $tipo->icono }}</td>
+                    <td>
+                        <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $tipo->color }}; border: 1px solid #ccc; vertical-align: middle;"></span>
+                        {{ $tipo->color }}
+                    </td>
                     <td>{{ $tipo->activo ? 'Sí' : 'No' }}</td>
                     <td>
                         <a href="{{ route('erp.tipo-documento-empresa.vista.editar', $tipo->id) }}">Editar</a>

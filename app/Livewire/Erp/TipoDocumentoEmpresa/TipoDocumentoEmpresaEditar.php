@@ -15,7 +15,13 @@ class TipoDocumentoEmpresaEditar extends Component
     public TipoDocumentoEmpresa $tipo;
 
     public string $nombre = '';
+
     public string $abreviatura = '';
+
+    public string $color = '';
+
+    public string $icono = '';
+
     public bool $activo = true;
 
     public function mount($id)
@@ -23,6 +29,8 @@ class TipoDocumentoEmpresaEditar extends Component
         $this->tipo = TipoDocumentoEmpresa::findOrFail($id);
         $this->nombre = $this->tipo->nombre;
         $this->abreviatura = $this->tipo->abreviatura ?? '';
+        $this->color = $this->tipo->color ?? '';
+        $this->icono = $this->tipo->icono ?? '';
         $this->activo = $this->tipo->activo;
     }
 
@@ -31,6 +39,8 @@ class TipoDocumentoEmpresaEditar extends Component
         return [
             'nombre' => ['required', 'string', 'max:255', Rule::unique('tipo_documento_empresas', 'nombre')->ignore($this->tipo->id)],
             'abreviatura' => ['nullable', 'string', 'max:10'],
+            'color' => ['nullable', 'string', 'max:50'],
+            'icono' => ['nullable', 'string', 'max:100'],
             'activo' => ['boolean'],
         ];
     }
@@ -42,6 +52,8 @@ class TipoDocumentoEmpresaEditar extends Component
         $this->tipo->update([
             'nombre' => $this->nombre,
             'abreviatura' => $this->abreviatura,
+            'color' => $this->color,
+            'icono' => $this->icono,
             'activo' => $this->activo,
         ]);
 
@@ -54,6 +66,7 @@ class TipoDocumentoEmpresaEditar extends Component
     {
         $this->tipo->delete();
         session()->flash('success', 'Tipo de documento eliminado.');
+
         return $this->redirect(route('erp.tipo-documento-empresa.vista.lista'), navigate: true);
     }
 
