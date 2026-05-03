@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('titulo');
             $table->foreignId('estado_auditoria_id')->constrained('estado_auditorias');
-            
+
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
 

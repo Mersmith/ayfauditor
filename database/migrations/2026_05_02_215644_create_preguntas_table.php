@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('texto');
             $table->foreignId('categoria_pregunta_id')->nullable()->constrained('categoria_preguntas')->onDelete('set null');
             $table->text('descripcion_ayuda')->nullable();
-            
+
             $table->boolean('activo')->default(true);
 
             $table->timestamps();

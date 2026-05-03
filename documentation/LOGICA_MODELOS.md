@@ -38,6 +38,16 @@ php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-lista --clas
 php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-crear --class
 php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-editar --class
 
+php artisan make:model Pregunta -mfsc
+php artisan make:livewire erp.pregunta.pregunta-lista --class
+php artisan make:livewire erp.pregunta.pregunta-crear --class
+php artisan make:livewire erp.pregunta.pregunta-editar --class
+
+php artisan make:model Plantilla -mfsc
+php artisan make:livewire erp.plantilla.plantilla-lista --class
+php artisan make:livewire erp.plantilla.plantilla-crear --class
+php artisan make:livewire erp.plantilla.plantilla-editar --class
+
 php artisan make:model EstadoAuditoria -mfsc
 php artisan make:livewire erp.estado-auditoria.estado-auditoria-lista --class
 php artisan make:livewire erp.estado-auditoria.estado-auditoria-crear --class
@@ -48,10 +58,6 @@ php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class
 php artisan make:livewire erp.auditoria.auditoria-editar --class
 
-php artisan make:model Pregunta -mfsc
-php artisan make:livewire erp.pregunta.pregunta-lista --class
-php artisan make:livewire erp.pregunta.pregunta-crear --class
-php artisan make:livewire erp.pregunta.pregunta-editar --class
 
 php artisan make:model Respuesta -mfsc
 php artisan make:livewire erp.respuesta.respuesta-lista --class
