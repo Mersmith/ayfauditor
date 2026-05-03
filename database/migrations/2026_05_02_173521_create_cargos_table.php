@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            $table->string('slug')->nullable()->unique()->comment('ej: dueno, colaborador, auditor-principal. Solo para cargos especiales de auditoría.');
-            $table->string('tipo')->default('administrativo')->comment('administrativo, auditoria');
             $table->text('descripcion')->nullable();
             $table->string('color')->nullable();
             $table->string('icono')->nullable(); // fa-solid fa-gear

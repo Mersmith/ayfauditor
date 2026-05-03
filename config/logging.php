@@ -162,6 +162,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-cargo' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-cargo.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];

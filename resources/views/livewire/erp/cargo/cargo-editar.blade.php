@@ -1,64 +1,167 @@
-<div>
-    <h1>Editar Cargo: {{ $nombre }}</h1>
+<div class="g_gap_pagina">
+    <x-loading-overlay wire:loading wire:target="update, eliminarCargoOn" message="Procesando..." />
 
-    <form wire:submit="update">
-        <div>
-            <label>Tipo:</label>
-            <select wire:model.live="tipo">
-                <option value="administrativo">Administrativo (Staff)</option>
-                <option value="auditoria">Auditoría (Rol en Sesión)</option>
-            </select>
-            @error('tipo') <span>{{ $message }}</span> @enderror
+    <div class="g_panel cabecera_titulo_pagina">
+        <h2>Editar Cargo: {{ $cargo->nombre }}</h2>
+
+        <div class="cabecera_titulo_botones">
+            <a href="{{ route('erp.cargo.vista.lista') }}" class="g_boton light">
+                Lista <i class="fa-solid fa-list"></i>
+            </a>
+
+            <button type="button" class="g_boton danger" onclick="confirmarEliminarCargo()">
+                Eliminar <i class="fa-solid fa-trash-can"></i>
+            </button>
+
+            <button type="button" class="g_boton dark" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left"></i> Regresar</button>
         </div>
+    </div>
 
-        <div>
-            <label>Nombre:</label>
-            <input type="text" wire:model="nombre">
-            @error('nombre') <span>{{ $message }}</span> @enderror
-        </div>
+    <form wire:submit="update" class="formulario">
+        <div class="g_fila">
+            <div class="g_columna_8">
+                <div class="g_panel" x-data="{ activeTab: 'general' }">
+                    
+                    <div class="g_tab_navegacion">
+                        <div class="g_tab_botones">
+                            <button type="button" @click="activeTab = 'general'"
+                                :class="activeTab === 'general' ? 'g_tab_active' : 'g_tab_inactive'"
+                                class="g_tab_boton">
+                                <i class="fa-solid fa-circle-info"></i> Información General
+                            </button>
 
-        @if($tipo === 'auditoria')
-        <div>
-            <label>Slug (Identificador único para lógica):</label>
-            <input type="text" wire:model="slug">
-            @error('slug') <span>{{ $message }}</span> @enderror
-        </div>
-        @endif
+                            <button type="button" @click="activeTab = 'visual'"
+                                :class="activeTab === 'visual' ? 'g_tab_active' : 'g_tab_inactive'" class="g_tab_boton">
+                                <i class="fa-solid fa-palette"></i> Identidad Visual
+                            </button>
+                        </div>
+                    </div>
 
-        <div>
-            <label>Descripción:</label>
-            <textarea wire:model="descripcion"></textarea>
-            @error('descripcion') <span>{{ $message }}</span> @enderror
-        </div>
+                    <!-- TAB GENERAL -->
+                    <div x-show="activeTab === 'general'" x-transition class="g_tab_content">
+                        <div class="g_margin_bottom_15">
+                            <label for="estado_activo">
+                                Estado <span class="obligatorio"><i class="fa-solid fa-asterisk"></i></span>
+                            </label>
 
-        <div>
-            <label>Color:</label>
-            <input type="text" wire:model="color" placeholder="Ej: #3b82f6">
-            @error('color') <span>{{ $message }}</span> @enderror
-        </div>
+                            <div class="g_switch-wrapper">
+                                <label class="g_switch">
+                                    <input id="estado_activo" type="checkbox" wire:model.live="activo">
+                                    <span class="g_switch-slider"></span>
+                                </label>
 
-        <div>
-            <label>Icono (FontAwesome):</label>
-            <input type="text" wire:model="icono" placeholder="Ej: fa-solid fa-user">
-            @error('icono') <span>{{ $message }}</span> @enderror
-        </div>
+                                <span class="g_switch-label">
+                                    {{ $activo ? 'Activo' : 'Inactivo' }}
+                                </span>
 
-        <div>
-            <label>Activo:</label>
-            <input type="checkbox" wire:model="activo">
-        </div>
+                                @error('activo')
+                                    <p class="mensaje_error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
 
-        <div style="margin-top: 10px;">
-            <button type="submit">Actualizar Cargo</button>
-            <a href="{{ route('erp.cargo.vista.lista') }}">Cancelar</a>
+                        <div class="g_margin_bottom_10">
+                            <label for="nombre">
+                                Nombre del Cargo <span class="obligatorio"><i class="fa-solid fa-asterisk"></i></span>
+                            </label>
+                            <input type="text" id="nombre" wire:model.blur="nombre"
+                                class="@error('nombre') input-error @enderror" autocomplete="off">
+                            @error('nombre')
+                                <p class="mensaje_error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="g_margin_bottom_10">
+                            <label for="descripcion">Descripción / Responsabilidades</label>
+                            <textarea id="descripcion" wire:model.blur="descripcion" rows="3"
+                                class="@error('descripcion') input-error @enderror"></textarea>
+                            @error('descripcion')
+                                <p class="mensaje_error">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- TAB VISUAL -->
+                    <div x-show="activeTab === 'visual'" x-transition class="g_tab_content">
+                        <div class="g_fila">
+                            <div class="g_margin_bottom_10 g_columna_6">
+                                <label for="color">Color Representativo</label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="color" id="color" wire:model.live="color" style="width: 50px; height: 38px; padding: 2px;">
+                                    <input type="text" wire:model.blur="color">
+                                </div>
+                                @error('color')
+                                    <p class="mensaje_error">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="g_margin_bottom_10 g_columna_6">
+                                <label for="icono">Icono (FontAwesome)</label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="text" id="icono" wire:model.blur="icono">
+                                    <div class="g_badge light" style="padding: 10px;">
+                                        <i class="{{ $icono ?: 'fa-solid fa-question' }}"></i>
+                                    </div>
+                                </div>
+                                @error('icono')
+                                    <p class="mensaje_error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formulario_botones g_tab_form_buttons">
+                        <button type="submit" class="g_boton guardar" wire:loading.attr="disabled" wire:target="update">
+                            <span wire:loading.remove wire:target="update">
+                                <i class="fa-solid fa-save"></i> Guardar Cambios
+                            </span>
+                            <span wire:loading wire:target="update">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Actualizando...
+                            </span>
+                        </button>
+
+                        <button type="button" class="g_boton cancelar" onclick="history.back()">
+                            <i class="fa-solid fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="g_columna_4">
+                <div class="g_panel">
+                    <h3>Previsualización</h3>
+                    <p class="g_inferior g_margin_bottom_15">Vista previa del badge.</p>
+                    
+                    <div style="padding: 20px; border: 1px dashed #ddd; border-radius: 8px; text-align: center;">
+                        <div style="background-color: {{ $color }}; color: #fff; padding: 10px 20px; border-radius: 20px; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="{{ $icono ?: 'fa-solid fa-question' }}"></i>
+                            <span style="font-weight: 500;">{{ $nombre ?: 'Nombre del Cargo' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 
-    <hr style="margin-top: 20px;">
-    <div style="background-color: #fee; padding: 10px;">
-        <h3>Zona Peligrosa</h3>
-        <button type="button" onclick="confirm('¿Eliminar este cargo?') || event.stopImmediatePropagation()" wire:click="delete" style="color: red;">
-            Eliminar Registro
-        </button>
-    </div>
+    @script
+    <script>
+        window.confirmarEliminarCargo = function () {
+            Swal.fire({
+                title: '¿Quieres eliminar este cargo?',
+                text: "Esta acción no se puede deshacer si el cargo está asignado a personal.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '¡Sí, eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $wire.eliminarCargoOn();
+                }
+            });
+        }
+    </script>
+    @endscript
 </div>

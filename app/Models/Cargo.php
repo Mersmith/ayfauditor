@@ -12,8 +12,6 @@ class Cargo extends Model
 
     protected $fillable = [
         'nombre',
-        'slug',
-        'tipo',
         'descripcion',
         'color',
         'icono',
@@ -25,18 +23,18 @@ class Cargo extends Model
     ];
 
     /**
-     * Relación con los participantes de auditoría (cuando el cargo actúa como rol en una auditoría).
+     * Relación con el personal asignado a este cargo en una empresa.
      */
-    public function participantesAuditoria()
+    public function personalEmpresas()
     {
-        return $this->hasMany(ParticipanteAuditoria::class, 'cargo_id');
+        return $this->hasMany(PersonalEmpresa::class);
     }
 
     /**
-     * Relación con los trabajadores (cuando el cargo es su puesto administrativo).
+     * Relación directa con el staff interno.
      */
     public function trabajadores()
     {
-        return $this->hasMany(Trabajador::class, 'cargo_id');
+        return $this->hasMany(Trabajador::class);
     }
 }
