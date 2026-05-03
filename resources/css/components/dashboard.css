@@ -1,0 +1,54 @@
+.g_dashboard_hero {
+    background: linear-gradient(135deg, var(--color-primario, #02424E) 0%, #02363f 100%);
+    color: var(--color-contraste-primario, #ffffff);
+    border: none;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--borde-radius, 8px);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.g_dashboard_hero_content {
+    position: relative;
+    z-index: 2;
+}
+
+.g_dashboard_hero_title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.g_dashboard_hero_title span {
+    color: var(--color-secundario, #FFA726);
+}
+
+.g_dashboard_hero_text {
+    opacity: 0.8;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.g_dashboard_hero_decor_1 {
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(78, 204, 163, 0.1);
+    border-radius: 50%;
+}
+
+.g_dashboard_hero_decor_2 {
+    position: absolute;
+    right: 50px;
+    bottom: -80px;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}

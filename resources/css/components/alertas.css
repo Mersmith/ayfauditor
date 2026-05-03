@@ -1,0 +1,119 @@
+/* ALERTAS GENERALES */
+.g_alerta {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: var(--fw-medium);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-alerta);
+}
+
+.g_alerta i {
+    font-size: var(--fs-alerta);
+}
+
+.g_alerta.success {
+    background-color: var(--background-success);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+}
+
+.g_alerta.error {
+    background-color: var(--background-error);
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+}
+
+.g_alerta.info {
+    background-color: var(--background-info);
+    border: 1px solid var(--color-info);
+    color: var(--color-info);
+}
+
+/* ALERTA CAJA */
+.g_resaltado_caja {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: var(--fs-alerta);
+}
+
+.g_resaltado_caja .g_resaltado_caja_titulo {
+    display: block;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-alerta);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+
+.g_resaltado_caja strong {
+    font-weight: var(--fw-bold);
+}
+
+.g_resaltado_caja.success {
+    background: var(--background-success);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+}
+
+.g_resaltado_caja.info {
+    background: var(--background-info);
+    border: 1px solid var(--color-info);
+    color: var(--color-info);
+}
+
+/*ALERTA RESALTADO*/
+.g_resaltado_indicacion {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+    font-size: var(--fs-alerta);
+    border: 1px solid transparent;
+}
+
+.g_resaltado_indicacion i {
+    font-size: var(--fs-alerta);
+    margin-top: 2px;
+}
+
+.g_resaltado_indicacion strong {
+    font-weight: var(--fw-semibold);
+}
+
+.g_resaltado_indicacion.info {
+    color: var(--color-info);
+}
+
+.g_resaltado_indicacion.info i {
+    color: var(--color-info);
+}
+
+.g_resaltado_indicacion.info strong {
+    color: var(--color-info-strong);
+}
+
+.g_resaltado_indicacion.warning {
+    color: var(--color-warning);
+}
+
+.g_resaltado_indicacion.warning i {
+    color: var(--color-warning);
+}
+
+.g_resaltado_indicacion.warning strong {
+    color: var(--color-warning-strong);
+}
+
+.g_resaltado_indicacion.error {
+    color: var(--color-error);
+}
+
+.g_resaltado_indicacion.error i {
+    color: var(--color-error);
+}
+
+.g_resaltado_indicacion.error strong {
+    color: var(--color-error-strong);
+}

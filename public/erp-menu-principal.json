@@ -1,0 +1,208 @@
+[
+    {
+        "id": 1,
+        "nombre": "Clientes",
+        "ruta": null,
+        "url": null,
+        "icono": "fa-solid fa-users",
+        "nivel": 1,
+        "permiso": "cliente.ver",
+        "submenus": [
+            {
+                "id": 11,
+                "nombre": "Lista",
+                "ruta": "erp.cliente.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "cliente.lista",
+                "submenus": []
+            },
+            {
+                "id": 12,
+                "nombre": "Nuevo",
+                "ruta": "erp.cliente.vista.crear",
+                "url": null,
+                "nivel": 2,
+                "permiso": "cliente.crear",
+                "submenus": []
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "nombre": "Empresas",
+        "ruta": null,
+        "url": null,
+        "icono": "fa-solid fa-building",
+        "nivel": 1,
+        "permiso": "empresa.ver",
+        "submenus": [
+            {
+                "id": 21,
+                "nombre": "Lista",
+                "ruta": "erp.empresa.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "empresa.lista",
+                "submenus": []
+            },
+            {
+                "id": 22,
+                "nombre": "Nueva",
+                "ruta": "erp.empresa.vista.crear",
+                "url": null,
+                "nivel": 2,
+                "permiso": "empresa.crear",
+                "submenus": []
+            },
+            {
+                "id": 23,
+                "nombre": "Personal",
+                "ruta": "erp.personal.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "personal.lista",
+                "submenus": []
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "nombre": "Auditoría",
+        "ruta": null,
+        "url": null,
+        "icono": "fa-solid fa-clipboard-check",
+        "nivel": 1,
+        "permiso": "auditoria.ver",
+        "submenus": [
+            {
+                "id": 31,
+                "nombre": "Sesiones",
+                "ruta": "erp.auditoria.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "auditoria.lista",
+                "submenus": []
+            },
+            {
+                "id": 32,
+                "nombre": "Participantes",
+                "ruta": "erp.participante-auditoria.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "participante-auditoria.lista",
+                "submenus": []
+            },
+            {
+                "id": 33,
+                "nombre": "Ejecución (Respuestas)",
+                "ruta": "erp.respuesta.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "respuesta.lista",
+                "submenus": []
+            },
+            {
+                "id": 34,
+                "nombre": "Nueva",
+                "ruta": "erp.auditoria.vista.crear",
+                "url": null,
+                "nivel": 2,
+                "permiso": "auditoria.crear",
+                "submenus": []
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "nombre": "Configuración",
+        "ruta": null,
+        "url": null,
+        "icono": "fa-solid fa-gear",
+        "nivel": 1,
+        "permiso": "configuracion.ver",
+        "submenus": [
+            {
+                "id": 41,
+                "nombre": "Equipo (Auditores)",
+                "ruta": "erp.trabajador.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "trabajador.lista",
+                "submenus": []
+            },
+            {
+                "id": 42,
+                "nombre": "Tipos Documento",
+                "ruta": "erp.tipo-documento-empresa.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "tipo-documento-empresa.lista",
+                "submenus": []
+            },
+            {
+                "id": 43,
+                "nombre": "Cargos",
+                "ruta": "erp.cargo.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "cargo.lista",
+                "submenus": []
+            },
+            {
+                "id": 44,
+                "nombre": "Especialidades",
+                "ruta": "erp.especialidad.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "especialidad.lista",
+                "submenus": []
+            },
+            {
+                "id": 45,
+                "nombre": "Categorías Preguntas",
+                "ruta": "erp.categoria-pregunta.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "categoria-pregunta.lista",
+                "submenus": []
+            },
+            {
+                "id": 46,
+                "nombre": "Banco de Preguntas",
+                "ruta": "erp.pregunta.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "pregunta.lista",
+                "submenus": []
+            },
+            {
+                "id": 47,
+                "nombre": "Plantillas",
+                "ruta": "erp.plantilla.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "plantilla.lista",
+                "submenus": []
+            },
+            {
+                "id": 48,
+                "nombre": "Estados Auditoría",
+                "ruta": "erp.estado-auditoria.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "estado-auditoria.lista",
+                "submenus": []
+            },
+            {
+                "id": 49,
+                "nombre": "Estados Respuesta",
+                "ruta": "erp.estado-respuesta.vista.lista",
+                "url": null,
+                "nivel": 2,
+                "permiso": "estado-respuesta.lista",
+                "submenus": []
+            }
+        ]
+    }
+]

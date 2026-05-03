@@ -1,0 +1,22 @@
+:root {
+    --ancho-centrar-pagina: 1280px;
+
+    --alto-header-web-banner: 0px;
+    --alto-header-web: 100px;
+    --alto-header-admin: 50px;
+
+    --ancho-sidebar-admin-item: 70px;
+    --ancho-sidebar-admin-menu: 220px;
+
+    /* BREAKPOINTS (Standard: Mobile First)
+       Uso: @media (max-width: 1024px) { ... } (Desktop first)
+       Uso: @media (min-width: 768px) { ... } (Mobile first - RECOMENDADO)
+    */
+    --view-desktop: 1024px;
+    --view-tablet: 768px;
+    --view-mobile: 500px;
+
+    --borde-card: 1px solid var(--color-light-border);
+    --borde-radius: 10px;
+
+}

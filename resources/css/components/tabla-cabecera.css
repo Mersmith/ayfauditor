@@ -1,0 +1,44 @@
+/*TABLA CABECERA*/
+.g_tabla_cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 5px;
+}
+
+.g_tabla_cabecera_botones {
+    display: flex;
+    gap: 15px;
+    overflow-y: auto;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+
+
+/*TABLA CABECERA FILTRO*/
+.g_tabla_cabecera_filtro {
+    display: flex;
+}
+
+@media (max-width: 900px) {
+
+    /*TABLA CABECERA*/
+    .g_tabla_cabecera {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /*TABLA CABECERA BOTONES*/
+    .g_tabla_cabecera_botones {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /*TABLA CABECERA BUSCAR*/
+    .g_tabla_cabecera_filtro {
+        width: 100%;
+    }
+
+
+}

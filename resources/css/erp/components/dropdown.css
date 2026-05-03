@@ -1,0 +1,128 @@
+.header_dropdown_wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: var(--alto-header-admin);
+}
+
+/* ---------- TRIGGER ---------- */
+
+.header_dropdown_trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 12px;
+    transition: background 0.2s;
+    color: var(--color-texto-primario);
+}
+
+/* ---------- PANEL ---------- */
+
+.header_dropdown_cabecera {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    min-width: 200px;
+    background: var(--color-fondo-header);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    animation: dropdownFade 0.15s ease-out;
+}
+
+/* Posición */
+.header_dropdown_cabecera.right {
+    right: 0;
+}
+
+.header_dropdown_cabecera.left {
+    left: 0;
+    right: auto;
+}
+
+/* Tamaños */
+.header_dropdown_cabecera.narrow {
+    width: 200px;
+}
+
+.header_dropdown_cabecera.normal {
+    width: 240px;
+}
+
+.header_dropdown_cabecera.wide {
+    width: 280px;
+}
+
+/* ---------- CUERPO ---------- */
+
+.header_dropdown_cuerpo {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* ---------- ITEMS ---------- */
+
+.header_dropdown_item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-texto-primario);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.header_dropdown_item:hover {
+    background: var(--color-fondo);
+    color: var(--color-primario);
+}
+
+.header_dropdown_item.active {
+    background: var(--color-primario-light);
+    color: var(--color-primario);
+}
+
+.header_dropdown_item i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+/* Check */
+.header_dropdown_item_check {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--color-primario);
+}
+
+/* Divider */
+.header_dropdown_divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 8px 0;
+}
+
+/* Danger */
+.header_dropdown_item_danger {
+    color: #ef4444 !important;
+}
+
+.header_dropdown_item_danger:hover {
+    background: #fef2f2 !important;
+}
+
+/* Alpine */
+[x-cloak] {
+    display: none !important;
+}

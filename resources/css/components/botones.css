@@ -1,0 +1,239 @@
+.g_boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 12px;
+    font-size: var(--fs-button, 14px);
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    line-height: 1.2;
+    width: max-content;
+}
+
+.g_boton:hover {
+    filter: brightness(1.1);
+}
+
+.g_boton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.g_boton.primary {
+    background-color: var(--color-vivo);
+    color: var(--color-vivo-contraste);
+}
+
+.g_boton.secondary {
+    background-color: var(--color-brillo);
+    color: var(--color-brillo-contraste);
+}
+
+.g_boton.success {
+    background-color: var(--color-success);
+    color: var(--color-success-contraste);
+}
+
+.g_boton.danger {
+    background-color: var(--color-danger);
+    color: var(--color-danger-contraste);
+}
+
+.g_boton.warning {
+    background-color: var(--color-warning);
+    color: var(--color-warning-contraste);
+}
+
+.g_boton.info {
+    background-color: var(--color-info);
+    color: var(--color-info-contraste);
+}
+
+.g_boton.light {
+    background-color: var(--color-claro);
+    color: var(--color-claro-texto);
+    border: 1px solid var(--color-claro);
+}
+
+.g_boton.dark {
+    background-color: var(--color-oscuro);
+    color: var(--color-oscuro-contraste);
+}
+
+.g_boton.guardar {
+    background-color: var(--color-primario);
+    color: var(--color-primario-contraste-1);
+}
+
+.g_boton.cancelar {
+    background-color: var(--color-secundario);
+    color: var(--color-secundario-contraste-1);
+}
+
+.g_boton.agregar {
+    background-color: var(--color-agregar);
+    color: var(--color-agregar-contraste);
+}
+
+.g_boton.pdf {
+    background-color: var(--color-pdf);
+    color: var(--color-pdf-contraste);
+}
+
+.g_boton.excel {
+    background-color: var(--color-excel);
+    color: var(--color-excel-contraste);
+}
+
+.g_boton_largo {
+    width: 100%;
+    padding: 15px !important;
+    font-size: 14px !important;
+}
+
+.g_accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+}
+
+.g_accion.ver {
+    color: var(--color-ver);
+}
+
+.g_accion.ver:hover {
+    background-color: var(--background-ver);
+}
+
+.g_accion.editar {
+    color: var(--color-editar);
+}
+
+.g_accion.editar:hover {
+    background-color: var(--background-editar);
+}
+
+.g_accion.eliminar {
+    color: var(--color-eliminar);
+}
+
+.g_accion.eliminar:hover {
+    background-color: var(--background-eliminar);
+}
+
+.g_accion.info {
+    color: var(--color-info);
+}
+
+.g_accion.info:hover {
+    background-color: var(--background-info);
+}
+
+.g_accion.alerta {
+    color: var(--color-alerta);
+}
+
+.g_accion.alerta:hover {
+    background-color: var(--background-alerta);
+}
+
+.g_accion.success {
+    color: var(--color-success);
+}
+
+.g_accion.success:hover {
+    background-color: var(--background-success);
+}
+
+.boton_personalizado {
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 25px;
+    justify-content: center;
+}
+
+.boton_personalizado_negro {
+    background: var(--color-negro);
+    border: 1px solid var(--color-negro);
+    color: var(--color-blanco);
+}
+
+.boton_personalizado_verde {
+    background: var(--color-primario);
+    border: 1px solid var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.boton_personalizado_verde:hover {
+    background: var(--color-secundario);
+    border: 1px solid var(--color-primario);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_blanco {
+    background: var(--color-plomo);
+    border: 1px solid var(--color-gris);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_blanco:hover {
+    background: var(--color-primario);
+    border: 1px solid var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.boton_personalizado_blanco_v2 {
+    background: var(--color-plomo);
+    border: 1px solid var(--color-gris);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_blanco_v2:hover {
+    background: var(--color-secundario);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_amarillo {
+    background: var(--color-secundario);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_amarillo:hover {
+    background: var(--color-primario);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-blanco);
+}
+
+.boton_personalizado_amarillo_v2 {
+    background: var(--color-secundario);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-primario);
+}
+
+.boton_personalizado_amarillo_v2:hover {
+    background: var(--color-blanco);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-primario);
+}

@@ -1,0 +1,123 @@
+.g_cajas_input .g_grid_modulos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.g_cajas_input .modulo_acordeon {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.g_cajas_input .modulo_cabecera {
+    background: #f8fafc;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.g_cajas_input .modulo_cabecera:hover {
+    background: #f1f5f9;
+}
+
+.g_cajas_input .modulo_cabecera h5 {
+    margin: 0;
+    text-transform: uppercase;
+    color: #475569;
+    font-size: var(--fs-inputs);
+    font-weight: 700;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.g_cajas_input .modulo_cabecera i.chevron {
+    transition: transform 0.3s;
+    color: #94a3b8;
+}
+
+.g_cajas_input .modulo_acordeon.abierto .modulo_cabecera i.chevron {
+    transform: rotate(180deg);
+}
+
+.g_cajas_input .modulo_contenido {
+    padding: 20px;
+    display: none;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+}
+
+.g_cajas_input .modulo_acordeon.abierto .modulo_contenido {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grid dentro del acordeón para los recursos */
+.g_cajas_input .recursos_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.g_cajas_input .recurso_grupo {
+    background: #fafafa;
+    border: 1px dashed #cbd5e1;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.g_cajas_input .recurso_titulo {
+    font-size: var(--fs-inputs);
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: capitalize;
+}
+
+.g_cajas_input .permiso_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.g_cajas_input .permiso_item:last-child {
+    margin-bottom: 0;
+}
+
+.g_cajas_input .permiso_item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--color-primario);
+}
+
+.g_cajas_input .permiso_item label {
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: var(--fs-inputs);
+    color: #334155;
+}
+
+.g_cajas_input .permiso_item label:hover {
+    color: var(--color-primario);
+}

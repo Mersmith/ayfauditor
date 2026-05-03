@@ -1,0 +1,48 @@
+/* Light (default) */
+:root {
+    /* Page */
+    --color-fondo: var(--color-light);
+
+    /* Texto */
+    --color-texto-primario: var(--color-light-texto);
+
+    /* Border */
+    --border-color: var(--color-light-border);
+
+    /* Header */
+    --color-fondo-header: var(--color-light-contraste);
+
+    /* Sidebar */
+    --color-fondo-sidebar: var(--color-light-contraste);
+    --color-texto-sidebar: var(--color-light-texto);
+    --color-texto-sidebar-active: var(--color-light-contraste);
+    --color-fondo-sidebar-hover: var(--color-light-border);
+    --color-fondo-sidebar-active: var(--color-primario);
+
+    /* Panel */
+    --color-fondo-panel: var(--color-light-contraste);
+}
+
+/* Dark */
+[data-theme="dark"] {
+    /* Page */
+    --color-fondo: var(--color-dark);
+
+    /* Texto */
+    --color-texto-primario: var(--color-dark-texto);
+
+    /* Border */
+    --border-color: var(--color-dark-border);
+
+    /* Header */
+    --color-fondo-header: var(--color-dark-contraste);
+
+    /* Sidebar */
+    --color-fondo-sidebar: var(--color-dark-contraste);
+    --color-texto-sidebar: var(--color-dark-texto);
+    --color-texto-sidebar-active: var(--color-dark-texto);
+    --color-fondo-sidebar-hover: var(--color-dark-border);
+    --color-fondo-sidebar-active: var(--color-primario);
+
+    /* Panel */
+}

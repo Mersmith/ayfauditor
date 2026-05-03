@@ -1,0 +1,58 @@
+/* ================================
+CORE
+================================ */
+@import "../core/reset.css";
+
+@import "../core/tokens/typography.css";
+@import "../core/tokens/colors.css";
+
+@import "../core/themes.css";
+@import "../core/base.css";
+@import "../core/variables.css";
+@import "../core/globales.css";
+@import "../core/rejilla.css";
+@import "../core/animations.css";
+@import "../core/utilities.css";
+@import "../core/print.css";
+
+/* ================================
+LAYOUT
+================================ */
+@import "./layout.css";
+
+/* ================================
+COMPONENTS GLOBALES
+================================ */
+@import "../components/panel.css";
+@import "../components/botones.css";
+@import "../components/badge.css";
+@import "../components/tooltips.css";
+@import "../components/pagina-cabecera.css";
+@import "../components/tabla-cabecera.css";
+@import "../components/tabla.css";
+@import "../components/paginacion.css";
+@import "../components/formulario.css";
+@import "../components/alertas.css";
+@import "../components/tab.css";
+@import "../components/spinner.css";
+@import "../components/cajas-input.css";
+@import "../components/switch.css";
+@import "../components/select-search.css";
+@import "../components/ticket-chat.css";
+@import "../components/profile.css";
+@import "../components/dropzone.css";
+@import "../components/calendario.css";
+@import "../components/modal.css";
+@import "../components/imagen.css";
+@import "../components/lista.css";
+@import "../components/dashboard.css";
+@import "../components/informacion.css";
+@import "../components/whatsapp.css";
+@import "../components/tracker-comunicaciones.css";
+/* ================================
+COMPONENTS ERP
+================================ */
+@import "./components/header.css";
+@import "./components/dropdown.css";
+@import "./components/menu.css";
+@import "./components/sub-menu.css";
