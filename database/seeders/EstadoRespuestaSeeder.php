@@ -13,15 +13,45 @@ class EstadoRespuestaSeeder extends Seeder
     public function run(): void
     {
         $estados = [
-            ['nombre' => 'Sin Iniciar', 'slug' => 'vacio', 'color' => 'gray', 'descripcion' => 'Aún no se ha cargado información.'],
-            ['nombre' => 'Enviado / Por Revisar', 'slug' => 'enviado', 'color' => 'blue', 'descripcion' => 'El cliente ya respondió, pendiente revisión del auditor.'],
-            ['nombre' => 'En Revisión', 'slug' => 'en_revision', 'color' => 'indigo', 'descripcion' => 'El auditor está validando la respuesta.'],
-            ['nombre' => 'Observado', 'slug' => 'observado', 'color' => 'orange', 'descripcion' => 'Se requiere corregir o añadir más información.'],
-            ['nombre' => 'Aprobado', 'slug' => 'aprobado', 'color' => 'green', 'descripcion' => 'La respuesta y evidencia han sido validadas.'],
+            [
+                'nombre' => 'Pendiente',
+                'descripcion' => 'La pregunta aún no ha sido respondida.',
+                'color' => '#6b7280',
+                'icono' => 'fa-solid fa-clock',
+                'activo' => true,
+            ],
+            [
+                'nombre' => 'Cumple',
+                'descripcion' => 'La evidencia confirma el cumplimiento.',
+                'color' => '#10b981',
+                'icono' => 'fa-solid fa-check-circle',
+                'activo' => true,
+            ],
+            [
+                'nombre' => 'No Cumple',
+                'descripcion' => 'No se encontró evidencia de cumplimiento.',
+                'color' => '#ef4444',
+                'icono' => 'fa-solid fa-times-circle',
+                'activo' => true,
+            ],
+            [
+                'nombre' => 'Cumple Parcialmente',
+                'descripcion' => 'Cumplimiento incompleto o en proceso.',
+                'color' => '#f59e0b',
+                'icono' => 'fa-solid fa-adjust',
+                'activo' => true,
+            ],
+            [
+                'nombre' => 'No Aplica',
+                'descripcion' => 'El control no es aplicable a esta entidad.',
+                'color' => '#3b82f6',
+                'icono' => 'fa-solid fa-minus-circle',
+                'activo' => true,
+            ],
         ];
 
-        foreach ($estados as $est) {
-            EstadoRespuesta::create($est);
+        foreach ($estados as $estado) {
+            EstadoRespuesta::create($estado);
         }
     }
 }

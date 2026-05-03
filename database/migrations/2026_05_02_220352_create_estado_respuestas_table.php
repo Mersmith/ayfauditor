@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
-            $table->string('slug')->unique();
-            $table->string('color')->nullable();
             $table->text('descripcion')->nullable();
+            $table->string('color')->nullable(); // #000000
+            $table->string('icono')->nullable(); // fa-solid fa-gear
+            $table->boolean('activo')->default(true);
 
             $table->timestamps();
             $table->softDeletes();

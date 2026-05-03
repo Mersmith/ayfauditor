@@ -37,7 +37,8 @@
         <a href="{{ route('erp.categoria-pregunta.vista.lista') }}">Categorías Preguntas</a> |
         <a href="{{ route('erp.pregunta.vista.lista') }}">Banco de Preguntas</a> |
         <a href="{{ route('erp.plantilla.vista.lista') }}">Plantillas</a> |
-        <a href="{{ route('erp.estado-auditoria.vista.lista') }}">Estados Auditoría</a>
+        <a href="{{ route('erp.estado-auditoria.vista.lista') }}">Estados Auditoría</a> |
+        <a href="{{ route('erp.estado-respuesta.vista.lista') }}">Estados Respuesta</a>
     </nav>
 
     <hr>

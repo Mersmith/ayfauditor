@@ -21,6 +21,9 @@ use App\Livewire\Erp\Especialidad\EspecialidadLista;
 use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaCrear;
 use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaEditar;
 use App\Livewire\Erp\EstadoAuditoria\EstadoAuditoriaLista;
+use App\Livewire\Erp\EstadoRespuesta\EstadoRespuestaCrear;
+use App\Livewire\Erp\EstadoRespuesta\EstadoRespuestaEditar;
+use App\Livewire\Erp\EstadoRespuesta\EstadoRespuestaLista;
 use App\Livewire\Erp\ParticipanteAuditoria\ParticipanteAuditoriaCrear;
 use App\Livewire\Erp\ParticipanteAuditoria\ParticipanteAuditoriaEditar;
 use App\Livewire\Erp\ParticipanteAuditoria\ParticipanteAuditoriaLista;
@@ -117,4 +120,10 @@ Route::prefix('participante-auditoria')->name('participante-auditoria.vista.')->
     Route::get('/', ParticipanteAuditoriaLista::class)->name('lista');
     Route::get('/crear', ParticipanteAuditoriaCrear::class)->name('crear');
     Route::get('/editar/{id}', ParticipanteAuditoriaEditar::class)->name('editar');
+});
+
+Route::prefix('estado-respuesta')->name('estado-respuesta.vista.')->group(function () {
+    Route::get('/', EstadoRespuestaLista::class)->name('lista');
+    Route::get('/crear', EstadoRespuestaCrear::class)->name('crear');
+    Route::get('/editar/{id}', EstadoRespuestaEditar::class)->name('editar');
 });

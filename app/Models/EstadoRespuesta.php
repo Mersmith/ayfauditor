@@ -12,9 +12,14 @@ class EstadoRespuesta extends Model
 
     protected $fillable = [
         'nombre',
-        'slug',
-        'color',
         'descripcion',
+        'color',
+        'icono',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     public function respuestas()
