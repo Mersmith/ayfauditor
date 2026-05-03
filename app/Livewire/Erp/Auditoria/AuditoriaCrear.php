@@ -5,82 +5,135 @@ namespace App\Livewire\Erp\Auditoria;
 use App\Models\Auditoria;
 use App\Models\Empresa;
 use App\Models\EstadoAuditoria;
-use App\Models\EstadoRespuesta;
 use App\Models\Plantilla;
-use App\Models\Respuesta;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Nueva Auditoría')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Programar Auditoría')]
 class AuditoriaCrear extends Component
 {
-    public string $titulo = '';
+    public $empresa_id = '';
 
-    public ?int $empresa_id = null;
+    public $plantilla_id = '';
 
-    public ?int $plantilla_id = null;
+    public $titulo = '';
 
-    public ?int $estado_auditoria_id = null;
+    public $estado_auditoria_id = '';
 
-    public ?string $fecha_inicio = null;
+    public $fecha_inicio;
 
-    public ?string $fecha_fin = null;
-
-    protected $rules = [
-        'titulo' => 'required|string|max:255',
-        'empresa_id' => 'required|exists:empresas,id',
-        'plantilla_id' => 'nullable|exists:plantillas,id',
-        'estado_auditoria_id' => 'required|exists:estado_auditorias,id',
-        'fecha_inicio' => 'nullable|date',
-        'fecha_fin' => 'nullable|date',
-    ];
+    public $fecha_fin;
 
     public function mount()
     {
-        $this->estado_auditoria_id = EstadoAuditoria::first()?->id;
         $this->fecha_inicio = now()->format('Y-m-d');
+        // Por defecto el primer estado activo
+        $primerEstado = EstadoAuditoria::where('activo', true)->orderBy('id')->first();
+        $this->estado_auditoria_id = $primerEstado ? $primerEstado->id : '';
     }
 
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'empresa_id' => 'required|exists:empresas,id',
+            'plantilla_id' => 'required|exists:plantillas,id',
+            'titulo' => 'required|string|max:255',
+            'estado_auditoria_id' => 'required|exists:estado_auditorias,id',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+        ];
+    }
 
-        $auditoria = Auditoria::create([
-            'titulo' => $this->titulo,
-            'empresa_id' => $this->empresa_id,
-            'plantilla_id' => $this->plantilla_id,
-            'estado_auditoria_id' => $this->estado_auditoria_id,
-            'fecha_inicio' => $this->fecha_inicio,
-            'fecha_fin' => $this->fecha_fin,
-        ]);
+    public function validationAttributes()
+    {
+        return [
+            'empresa_id' => 'empresa',
+            'plantilla_id' => 'plantilla',
+            'titulo' => 'título de la auditoría',
+            'estado_auditoria_id' => 'estado',
+            'fecha_inicio' => 'fecha de inicio',
+            'fecha_fin' => 'fecha de fin',
+        ];
+    }
 
-        // Si se seleccionó una plantilla, inicializar las respuestas
-        if ($this->plantilla_id) {
-            $plantilla = Plantilla::with('preguntas')->find($this->plantilla_id);
-            $estadoRespuestaPendiente = EstadoRespuesta::first()?->id; // Ajustar según lógica real
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-            foreach ($plantilla->preguntas as $pregunta) {
-                Respuesta::create([
-                    'auditoria_id' => $auditoria->id,
-                    'pregunta_id' => $pregunta->id,
-                    'estado_respuesta_id' => $estadoRespuestaPendiente,
-                ]);
-            }
+    public function store()
+    {
+        // $this->authorize('auditoria.crear');
+
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los errores en los campos resaltados.',
+            ]);
+            throw $e;
         }
 
-        session()->flash('success', 'Sesión de auditoría creada correctamente.');
+        try {
+            DB::beginTransaction();
 
-        return $this->redirect(route('erp.auditoria.vista.lista'), navigate: true);
+            $auditoria = Auditoria::create([
+                'empresa_id' => $this->empresa_id,
+                'plantilla_id' => $this->plantilla_id,
+                'titulo' => trim($this->titulo),
+                'estado_auditoria_id' => $this->estado_auditoria_id,
+                'fecha_inicio' => $this->fecha_inicio,
+                'fecha_fin' => $this->fecha_fin ?: null,
+            ]);
+
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'La auditoría se ha programado correctamente.',
+            ]);
+
+            return redirect()->route('erp.auditoria.vista.lista');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-auditoria')->error('[AUDITORIA] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo programar la auditoría. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
         return view('livewire.erp.auditoria.auditoria-crear', [
-            'empresas' => Empresa::where('activo', true)->get(),
-            'plantillas' => Plantilla::where('activo', true)->get(),
-            'estados' => EstadoAuditoria::all(),
+            'empresas' => Empresa::where('activo', true)->orderBy('razon_social')->get(),
+            'plantillas' => Plantilla::where('activo', true)->orderBy('nombre')->get(),
+            'estados' => EstadoAuditoria::where('activo', true)->orderBy('id')->get(),
         ]);
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }

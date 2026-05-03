@@ -211,6 +211,27 @@ return [
             'days' => 14,
         ],
 
+        'erp-auditoria' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-auditoria.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
+        'erp-participante-auditoria' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-participante-auditoria.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
+        'erp-respuesta' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-respuesta.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];

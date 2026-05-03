@@ -6,62 +6,128 @@ use App\Models\Auditoria;
 use App\Models\Cargo;
 use App\Models\ParticipanteAuditoria;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Agregar Participante')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Asignar Participante')]
 class ParticipanteAuditoriaCrear extends Component
 {
-    public ?int $auditoria_id = null;
+    public $auditoria_id = '';
 
-    public ?int $user_id = null;
+    public $user_id = '';
 
-    public ?int $cargo_id = null;
+    public $cargo_id = '';
 
-    public ?int $invitado_por = null;
-
-    protected $rules = [
-        'auditoria_id' => 'required|exists:auditorias,id',
-        'user_id' => 'required|exists:users,id',
-        'cargo_id' => 'required|exists:cargos,id',
-        'invitado_por' => 'nullable|exists:users,id',
-    ];
-
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'auditoria_id' => 'required|exists:auditorias,id',
+            'user_id' => 'required|exists:users,id',
+            'cargo_id' => 'required|exists:cargos,id',
+        ];
+    }
 
-        // Evitar duplicados
-        $exists = ParticipanteAuditoria::where('auditoria_id', $this->auditoria_id)
-            ->where('user_id', $this->user_id)
-            ->exists();
+    public function validationAttributes()
+    {
+        return [
+            'auditoria_id' => 'auditoría',
+            'user_id' => 'usuario',
+            'cargo_id' => 'cargo',
+        ];
+    }
 
-        if ($exists) {
-            $this->addError('user_id', 'Este usuario ya participa en esta auditoría.');
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-            return;
+    public function store()
+    {
+        // $this->authorize('participante-auditoria.crear');
+
+        try {
+            $this->validate();
+
+            // Verificar duplicidad
+            $existe = ParticipanteAuditoria::where('auditoria_id', $this->auditoria_id)
+                ->where('user_id', $this->user_id)
+                ->exists();
+
+            if ($existe) {
+                $this->dispatch('alertaLivewire', [
+                    'type' => 'warning',
+                    'title' => 'Ya Asignado',
+                    'text' => 'Este usuario ya participa en la auditoría seleccionada.',
+                ]);
+
+                return;
+            }
+
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los campos resaltados.',
+            ]);
+            throw $e;
         }
 
-        ParticipanteAuditoria::create([
-            'auditoria_id' => $this->auditoria_id,
-            'user_id' => $this->user_id,
-            'cargo_id' => $this->cargo_id,
-            'invitado_por' => $this->invitado_por,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        session()->flash('success', 'Participante agregado correctamente.');
+            ParticipanteAuditoria::create([
+                'auditoria_id' => $this->auditoria_id,
+                'user_id' => $this->user_id,
+                'cargo_id' => $this->cargo_id,
+                'invitado_por' => auth()->id(),
+            ]);
 
-        return $this->redirect(route('erp.participante-auditoria.vista.lista'), navigate: true);
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'El participante se ha asignado correctamente.',
+            ]);
+
+            return redirect()->route('erp.participante-auditoria.vista.lista');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-participante-auditoria')->error('[PARTICIPANTE AUDITORIA] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo realizar la asignación. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
         return view('livewire.erp.participante-auditoria.participante-auditoria-crear', [
-            'auditorias' => Auditoria::orderBy('created_at', 'desc')->get(),
-            'usuarios' => User::with(['cliente', 'trabajador', 'personal'])->where('activo', true)->get(),
-            'cargos' => Cargo::where('tipo', 'auditoria')->where('activo', true)->get(),
+            'auditorias' => Auditoria::orderBy('titulo')->get(),
+            'usuarios' => User::orderBy('name')->get(),
+            'cargos' => Cargo::where('activo', true)->orderBy('nombre')->get(),
         ]);
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }
