@@ -3,51 +3,116 @@
 namespace App\Livewire\Erp\TipoDocumentoEmpresa;
 
 use App\Models\TipoDocumentoEmpresa;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Crear Tipo de Documento')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Registrar Tipo de Documento')]
 class TipoDocumentoEmpresaCrear extends Component
 {
-    public string $nombre = '';
+    public $nombre = '';
 
-    public string $abreviatura = '';
+    public $abreviatura = '';
 
-    public string $color = '';
+    public $color = '#3b82f6';
 
-    public string $icono = '';
+    public $icono = 'fa-solid fa-file-invoice';
 
-    public bool $activo = true;
+    public $activo = true;
 
-    protected $rules = [
-        'nombre' => 'required|string|max:255|unique:tipo_documento_empresas,nombre',
-        'abreviatura' => 'nullable|string|max:10',
-        'color' => 'nullable|string|max:50',
-        'icono' => 'nullable|string|max:100',
-        'activo' => 'boolean',
-    ];
-
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'nombre' => 'required|string|max:255|unique:tipo_documento_empresas,nombre',
+            'abreviatura' => 'nullable|string|max:20',
+            'color' => 'nullable|string|max:20',
+            'icono' => 'nullable|string|max:100',
+            'activo' => 'required|boolean',
+        ];
+    }
 
-        TipoDocumentoEmpresa::create([
-            'nombre' => $this->nombre,
-            'abreviatura' => $this->abreviatura,
-            'color' => $this->color,
-            'icono' => $this->icono,
-            'activo' => $this->activo,
-        ]);
+    public function validationAttributes()
+    {
+        return [
+            'nombre' => 'nombre del documento',
+            'abreviatura' => 'abreviatura',
+            'color' => 'color identificador',
+            'icono' => 'icono',
+        ];
+    }
 
-        session()->flash('success', 'Tipo de documento creado correctamente.');
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-        return $this->redirect(route('erp.tipo-documento-empresa.vista.lista'), navigate: true);
+    public function store()
+    {
+        // $this->authorize('tipo-documento-empresa.crear');
+
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los errores en los campos resaltados.',
+            ]);
+            throw $e;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            TipoDocumentoEmpresa::create([
+                'nombre' => trim($this->nombre),
+                'abreviatura' => trim($this->abreviatura) ?: null,
+                'color' => $this->color ?: null,
+                'icono' => $this->icono ?: null,
+                'activo' => $this->activo,
+            ]);
+
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'El tipo de documento se ha registrado correctamente.',
+            ]);
+
+            return redirect()->route('erp.tipo-documento-empresa.vista.lista');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-tipo-documento-empresa')->error('[TIPO_DOC] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo registrar el tipo de documento. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
         return view('livewire.erp.tipo-documento-empresa.tipo-documento-empresa-crear');
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }

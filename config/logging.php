@@ -155,6 +155,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-tipo-documento-empresa' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-tipo-documento-empresa.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
