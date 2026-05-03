@@ -13,6 +13,8 @@ class CategoriaPregunta extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'color',
+        'icono',
         'activo',
     ];
 

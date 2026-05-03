@@ -33,6 +33,11 @@ php artisan make:livewire erp.trabajador.trabajador-lista --class
 php artisan make:livewire erp.trabajador.trabajador-crear --class
 php artisan make:livewire erp.trabajador.trabajador-editar --class
 
+php artisan make:model CategoriaPregunta -mfsc
+php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-lista --class
+php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-crear --class
+php artisan make:livewire erp.categoria-pregunta.categoria-pregunta-editar --class
+
 php artisan make:model Auditoria -mfsc
 php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class

@@ -26,7 +26,8 @@
         <a href="{{ route('erp.trabajador.vista.lista') }}">Equipo (Auditores)</a> |
         <a href="{{ route('erp.tipo-documento-empresa.vista.lista') }}">Tipos Documento</a> |
         <a href="{{ route('erp.cargo.vista.lista') }}">Cargos</a> |
-        <a href="{{ route('erp.especialidad.vista.lista') }}">Especialidades</a>
+        <a href="{{ route('erp.especialidad.vista.lista') }}">Especialidades</a> |
+        <a href="{{ route('erp.categoria-pregunta.vista.lista') }}">Categorías Preguntas</a>
     </nav>
 
     <hr>

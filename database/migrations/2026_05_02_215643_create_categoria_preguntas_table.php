@@ -16,6 +16,8 @@ return new class extends Migration
 
             $table->string('nombre');
             $table->text('descripcion')->nullable();
+            $table->string('color')->nullable(); // #000000
+            $table->string('icono')->nullable(); // fa-solid fa-gear
             $table->boolean('activo')->default(true);
 
             $table->timestamps();

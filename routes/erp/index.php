@@ -1,27 +1,30 @@
 <?php
 
-use App\Livewire\Erp\Cliente\ClienteCrear;
-use App\Livewire\Erp\Cliente\ClienteEditar;
-use App\Livewire\Erp\Cliente\ClienteLista;
-use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaCrear;
-use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaEditar;
-use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaLista;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Erp\Empresa\EmpresaCrear;
-use App\Livewire\Erp\Empresa\EmpresaEditar;
-use App\Livewire\Erp\Empresa\EmpresaLista;
 use App\Livewire\Erp\Cargo\CargoCrear;
 use App\Livewire\Erp\Cargo\CargoEditar;
 use App\Livewire\Erp\Cargo\CargoLista;
+use App\Livewire\Erp\CategoriaPregunta\CategoriaPreguntaCrear;
+use App\Livewire\Erp\CategoriaPregunta\CategoriaPreguntaEditar;
+use App\Livewire\Erp\CategoriaPregunta\CategoriaPreguntaLista;
+use App\Livewire\Erp\Cliente\ClienteCrear;
+use App\Livewire\Erp\Cliente\ClienteEditar;
+use App\Livewire\Erp\Cliente\ClienteLista;
+use App\Livewire\Erp\Empresa\EmpresaCrear;
+use App\Livewire\Erp\Empresa\EmpresaEditar;
+use App\Livewire\Erp\Empresa\EmpresaLista;
 use App\Livewire\Erp\Especialidad\EspecialidadCrear;
 use App\Livewire\Erp\Especialidad\EspecialidadEditar;
 use App\Livewire\Erp\Especialidad\EspecialidadLista;
-use App\Livewire\Erp\Trabajador\TrabajadorCrear;
-use App\Livewire\Erp\Trabajador\TrabajadorEditar;
-use App\Livewire\Erp\Trabajador\TrabajadorLista;
 use App\Livewire\Erp\Personal\PersonalCrear;
 use App\Livewire\Erp\Personal\PersonalEditar;
 use App\Livewire\Erp\Personal\PersonalLista;
+use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaCrear;
+use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaEditar;
+use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaLista;
+use App\Livewire\Erp\Trabajador\TrabajadorCrear;
+use App\Livewire\Erp\Trabajador\TrabajadorEditar;
+use App\Livewire\Erp\Trabajador\TrabajadorLista;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('cliente')->name('cliente.vista.')->group(function () {
     Route::get('/', ClienteLista::class)->name('lista');
@@ -63,4 +66,10 @@ Route::prefix('trabajador')->name('trabajador.vista.')->group(function () {
     Route::get('/', TrabajadorLista::class)->name('lista');
     Route::get('/crear', TrabajadorCrear::class)->name('crear');
     Route::get('/editar/{id}', TrabajadorEditar::class)->name('editar');
+});
+
+Route::prefix('categoria-pregunta')->name('categoria-pregunta.vista.')->group(function () {
+    Route::get('/', CategoriaPreguntaLista::class)->name('lista');
+    Route::get('/crear', CategoriaPreguntaCrear::class)->name('crear');
+    Route::get('/editar/{id}', CategoriaPreguntaEditar::class)->name('editar');
 });
