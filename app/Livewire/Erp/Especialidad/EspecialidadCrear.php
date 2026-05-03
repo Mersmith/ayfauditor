@@ -12,12 +12,20 @@ use Livewire\Component;
 class EspecialidadCrear extends Component
 {
     public string $nombre = '';
+
     public string $descripcion = '';
+
+    public string $color = '';
+
+    public string $icono = '';
+
     public bool $activo = true;
 
     protected $rules = [
         'nombre' => 'required|string|max:255|unique:especialidads,nombre',
         'descripcion' => 'nullable|string',
+        'color' => 'nullable|string|max:50',
+        'icono' => 'nullable|string|max:100',
         'activo' => 'boolean',
     ];
 
@@ -28,6 +36,8 @@ class EspecialidadCrear extends Component
         Especialidad::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
+            'color' => $this->color,
+            'icono' => $this->icono,
             'activo' => $this->activo,
         ]);
 

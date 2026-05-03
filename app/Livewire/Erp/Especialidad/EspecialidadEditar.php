@@ -15,7 +15,13 @@ class EspecialidadEditar extends Component
     public Especialidad $especialidad;
 
     public string $nombre = '';
+
     public string $descripcion = '';
+
+    public string $color = '';
+
+    public string $icono = '';
+
     public bool $activo = true;
 
     public function mount($id)
@@ -23,6 +29,8 @@ class EspecialidadEditar extends Component
         $this->especialidad = Especialidad::findOrFail($id);
         $this->nombre = $this->especialidad->nombre;
         $this->descripcion = $this->especialidad->descripcion ?? '';
+        $this->color = $this->especialidad->color ?? '';
+        $this->icono = $this->especialidad->icono ?? '';
         $this->activo = $this->especialidad->activo;
     }
 
@@ -31,6 +39,8 @@ class EspecialidadEditar extends Component
         return [
             'nombre' => ['required', 'string', 'max:255', Rule::unique('especialidads', 'nombre')->ignore($this->especialidad->id)],
             'descripcion' => ['nullable', 'string'],
+            'color' => ['nullable', 'string', 'max:50'],
+            'icono' => ['nullable', 'string', 'max:100'],
             'activo' => ['boolean'],
         ];
     }
@@ -42,6 +52,8 @@ class EspecialidadEditar extends Component
         $this->especialidad->update([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
+            'color' => $this->color,
+            'icono' => $this->icono,
             'activo' => $this->activo,
         ]);
 
@@ -54,6 +66,7 @@ class EspecialidadEditar extends Component
     {
         $this->especialidad->delete();
         session()->flash('success', 'Especialidad eliminada.');
+
         return $this->redirect(route('erp.especialidad.vista.lista'), navigate: true);
     }
 
