@@ -190,6 +190,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-plantilla' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-plantilla.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];

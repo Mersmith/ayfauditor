@@ -3,54 +3,105 @@
 namespace App\Livewire\Erp\Plantilla;
 
 use App\Models\Plantilla;
-use App\Models\Pregunta;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Crear Plantilla')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Registrar Plantilla')]
 class PlantillaCrear extends Component
 {
-    public string $nombre = '';
+    public $nombre = '';
 
-    public string $descripcion = '';
+    public $descripcion = '';
 
-    public bool $activo = true;
+    public $activo = true;
 
-    public array $preguntas_seleccionadas = [];
-
-    protected $rules = [
-        'nombre' => 'required|string|max:255',
-        'descripcion' => 'nullable|string',
-        'activo' => 'boolean',
-        'preguntas_seleccionadas' => 'required|array|min:1',
-        'preguntas_seleccionadas.*' => 'exists:preguntas,id',
-    ];
-
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'nombre' => 'required|string|max:255|unique:plantillas,nombre',
+            'descripcion' => 'nullable|string',
+            'activo' => 'required|boolean',
+        ];
+    }
 
-        $plantilla = Plantilla::create([
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
-            'activo' => $this->activo,
-        ]);
+    public function validationAttributes()
+    {
+        return [
+            'nombre' => 'nombre de la plantilla',
+        ];
+    }
 
-        foreach ($this->preguntas_seleccionadas as $index => $preguntaId) {
-            $plantilla->preguntas()->attach($preguntaId, ['orden' => ($index + 1) * 10]);
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function store()
+    {
+        // $this->authorize('plantilla.crear');
+
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los errores en los campos resaltados.',
+            ]);
+            throw $e;
         }
 
-        session()->flash('success', 'Plantilla creada correctamente.');
+        try {
+            DB::beginTransaction();
 
-        return $this->redirect(route('erp.plantilla.vista.lista'), navigate: true);
+            $plantilla = Plantilla::create([
+                'nombre' => trim($this->nombre),
+                'descripcion' => trim($this->descripcion) ?: null,
+                'activo' => $this->activo,
+            ]);
+
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'La plantilla se ha registrado correctamente.',
+            ]);
+
+            return redirect()->route('erp.plantilla.vista.editar', $plantilla->id);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-plantilla')->error('[PLANTILLA] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo registrar la plantilla. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
-        return view('livewire.erp.plantilla.plantilla-crear', [
-            'bancoPreguntas' => Pregunta::with('categoria')->where('activo', true)->get(),
-        ]);
+        return view('livewire.erp.plantilla.plantilla-crear');
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }

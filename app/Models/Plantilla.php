@@ -25,6 +25,6 @@ class Plantilla extends Model
         return $this->belongsToMany(Pregunta::class, 'plantilla_preguntas')
                     ->withPivot('orden')
                     ->withTimestamps()
-                    ->orderBy('pivot_orden');
+                    ->orderBy('plantilla_preguntas.orden');
     }
 }
