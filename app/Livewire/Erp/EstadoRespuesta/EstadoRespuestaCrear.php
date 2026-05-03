@@ -3,51 +3,113 @@
 namespace App\Livewire\Erp\EstadoRespuesta;
 
 use App\Models\EstadoRespuesta;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Crear Estado de Respuesta')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Registrar Estado de Respuesta')]
 class EstadoRespuestaCrear extends Component
 {
-    public string $nombre = '';
+    public $nombre = '';
 
-    public string $descripcion = '';
+    public $color = '#10b981';
 
-    public string $color = '';
+    public $icono = 'fa-solid fa-check-circle';
 
-    public string $icono = '';
+    public $descripcion = '';
 
-    public bool $activo = true;
+    public $activo = true;
 
-    protected $rules = [
-        'nombre' => 'required|string|max:255|unique:estado_respuestas,nombre',
-        'descripcion' => 'nullable|string',
-        'color' => 'nullable|string|max:50',
-        'icono' => 'nullable|string|max:100',
-        'activo' => 'boolean',
-    ];
-
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'nombre' => 'required|string|max:255|unique:estado_respuestas,nombre',
+            'color' => 'nullable|string|max:20',
+            'icono' => 'nullable|string|max:50',
+            'descripcion' => 'nullable|string',
+            'activo' => 'required|boolean',
+        ];
+    }
 
-        EstadoRespuesta::create([
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
-            'color' => $this->color,
-            'icono' => $this->icono,
-            'activo' => $this->activo,
-        ]);
+    public function validationAttributes()
+    {
+        return [
+            'nombre' => 'nombre del estado',
+        ];
+    }
 
-        session()->flash('success', 'Estado de respuesta creado correctamente.');
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-        return $this->redirect(route('erp.estado-respuesta.vista.lista'), navigate: true);
+    public function store()
+    {
+        // $this->authorize('estado-respuesta.crear');
+
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los errores en los campos resaltados.',
+            ]);
+            throw $e;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            EstadoRespuesta::create([
+                'nombre' => trim($this->nombre),
+                'color' => $this->color ?: '#10b981',
+                'icono' => $this->icono ?: 'fa-solid fa-check-circle',
+                'descripcion' => trim($this->descripcion) ?: null,
+                'activo' => $this->activo,
+            ]);
+
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'El estado se ha registrado correctamente.',
+            ]);
+
+            return redirect()->route('erp.estado-respuesta.vista.lista');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-estado-respuesta')->error('[ESTADO RESPUESTA] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo registrar el estado. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
         return view('livewire.erp.estado-respuesta.estado-respuesta-crear');
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }
