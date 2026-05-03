@@ -183,6 +183,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-pregunta' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-pregunta.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
