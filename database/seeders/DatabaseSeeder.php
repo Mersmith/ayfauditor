@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             PreguntaSeeder::class,
             PlantillaSeeder::class,
             AuditoriaSeeder::class,
+            ParticipanteAuditoriaSeeder::class,
         ]);
     }
 }

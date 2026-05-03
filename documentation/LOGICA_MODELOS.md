@@ -58,15 +58,20 @@ php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class
 php artisan make:livewire erp.auditoria.auditoria-editar --class
 
-php artisan make:model Respuesta -mfsc
-php artisan make:livewire erp.respuesta.respuesta-lista --class
-php artisan make:livewire erp.respuesta.respuesta-crear --class
-php artisan make:livewire erp.respuesta.respuesta-editar --class
-
 php artisan make:model ParticipanteAuditoria -mfsc
 php artisan make:livewire erp.participante-auditoria.participante-auditoria-lista --class
 php artisan make:livewire erp.participante-auditoria.participante-auditoria-crear --class
 php artisan make:livewire erp.participante-auditoria.participante-auditoria-editar --class
+
+php artisan make:model EstadoRespuesta -mfsc
+php artisan make:livewire erp.estado-respuesta.estado-respuesta-lista --class
+php artisan make:livewire erp.estado-respuesta.estado-respuesta-crear --class
+php artisan make:livewire erp.estado-respuesta.estado-respuesta-editar --class
+
+php artisan make:model Respuesta -mfsc
+php artisan make:livewire erp.respuesta.respuesta-lista --class
+php artisan make:livewire erp.respuesta.respuesta-crear --class
+php artisan make:livewire erp.respuesta.respuesta-editar --class
 
 php artisan make:model ComentarioRespuesta -mfsc
 php artisan make:livewire erp.comentario-respuesta.comentario-respuesta-lista --class
