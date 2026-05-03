@@ -16,6 +16,10 @@ class CargoEditar extends Component
 
     public string $nombre = '';
 
+    public string $slug = '';
+
+    public string $tipo = 'administrativo';
+
     public string $descripcion = '';
 
     public string $color = '';
@@ -28,6 +32,8 @@ class CargoEditar extends Component
     {
         $this->cargo = Cargo::findOrFail($id);
         $this->nombre = $this->cargo->nombre;
+        $this->slug = $this->cargo->slug ?? '';
+        $this->tipo = $this->cargo->tipo;
         $this->descripcion = $this->cargo->descripcion ?? '';
         $this->color = $this->cargo->color ?? '';
         $this->icono = $this->cargo->icono ?? '';
@@ -38,6 +44,8 @@ class CargoEditar extends Component
     {
         return [
             'nombre' => ['required', 'string', 'max:255', Rule::unique('cargos', 'nombre')->ignore($this->cargo->id)],
+            'slug' => ['nullable', 'string', 'max:255', Rule::unique('cargos', 'slug')->ignore($this->cargo->id)],
+            'tipo' => ['required', 'in:administrativo,auditoria'],
             'descripcion' => ['nullable', 'string'],
             'color' => ['nullable', 'string', 'max:50'],
             'icono' => ['nullable', 'string', 'max:100'],
@@ -51,6 +59,8 @@ class CargoEditar extends Component
 
         $this->cargo->update([
             'nombre' => $this->nombre,
+            'slug' => $this->slug ?: null,
+            'tipo' => $this->tipo,
             'descripcion' => $this->descripcion,
             'color' => $this->color,
             'icono' => $this->icono,

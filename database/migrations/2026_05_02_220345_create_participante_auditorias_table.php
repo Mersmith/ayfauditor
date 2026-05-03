@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('auditoria_id')->constrained('auditorias')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            $table->foreignId('rol_auditoria_id')->constrained('rol_auditorias');
+            $table->foreignId('cargo_id')->constrained('cargos');
             $table->foreignId('invitado_por')->nullable()->constrained('users')->onDelete('set null');
 
             $table->timestamps();

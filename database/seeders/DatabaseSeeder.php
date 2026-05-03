@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             TrabajadorSeeder::class,
             CategoriaPreguntaSeeder::class,
             EstadoAuditoriaSeeder::class,
-            RolAuditoriaSeeder::class,
             EstadoRespuestaSeeder::class,
             PreguntaSeeder::class,
             PlantillaSeeder::class,

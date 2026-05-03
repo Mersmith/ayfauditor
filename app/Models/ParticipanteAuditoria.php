@@ -12,7 +12,7 @@ class ParticipanteAuditoria extends Model
     protected $fillable = [
         'auditoria_id',
         'user_id',
-        'rol_auditoria_id',
+        'cargo_id',
         'invitado_por',
     ];
 
@@ -26,9 +26,9 @@ class ParticipanteAuditoria extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function rol()
+    public function cargo()
     {
-        return $this->belongsTo(RolAuditoria::class, 'rol_auditoria_id');
+        return $this->belongsTo(Cargo::class, 'cargo_id');
     }
 
     public function invitadoPor()

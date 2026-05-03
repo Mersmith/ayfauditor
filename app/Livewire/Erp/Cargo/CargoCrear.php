@@ -3,6 +3,7 @@
 namespace App\Livewire\Erp\Cargo;
 
 use App\Models\Cargo;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -12,6 +13,10 @@ use Livewire\Component;
 class CargoCrear extends Component
 {
     public string $nombre = '';
+
+    public string $slug = '';
+
+    public string $tipo = 'administrativo';
 
     public string $descripcion = '';
 
@@ -23,11 +28,20 @@ class CargoCrear extends Component
 
     protected $rules = [
         'nombre' => 'required|string|max:255|unique:cargos,nombre',
+        'slug' => 'nullable|string|max:255|unique:cargos,slug',
+        'tipo' => 'required|in:administrativo,auditoria',
         'descripcion' => 'nullable|string',
         'color' => 'nullable|string|max:50',
         'icono' => 'nullable|string|max:100',
         'activo' => 'boolean',
     ];
+
+    public function updatedNombre($value)
+    {
+        if ($this->tipo === 'auditoria') {
+            $this->slug = Str::slug($value);
+        }
+    }
 
     public function save()
     {
@@ -35,6 +49,8 @@ class CargoCrear extends Component
 
         Cargo::create([
             'nombre' => $this->nombre,
+            'slug' => $this->slug ?: null,
+            'tipo' => $this->tipo,
             'descripcion' => $this->descripcion,
             'color' => $this->color,
             'icono' => $this->icono,

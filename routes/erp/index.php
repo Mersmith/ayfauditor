@@ -82,3 +82,4 @@ Route::prefix('estado-auditoria')->name('estado-auditoria.vista.')->group(functi
     Route::get('/crear', EstadoAuditoriaCrear::class)->name('crear');
     Route::get('/editar/{id}', EstadoAuditoriaEditar::class)->name('editar');
 });
+

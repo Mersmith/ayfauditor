@@ -3,10 +3,27 @@
 
     <form wire:submit="update">
         <div>
-            <label>Nombre del Cargo:</label>
+            <label>Tipo:</label>
+            <select wire:model.live="tipo">
+                <option value="administrativo">Administrativo (Staff)</option>
+                <option value="auditoria">Auditoría (Rol en Sesión)</option>
+            </select>
+            @error('tipo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Nombre:</label>
             <input type="text" wire:model="nombre">
             @error('nombre') <span>{{ $message }}</span> @enderror
         </div>
+
+        @if($tipo === 'auditoria')
+        <div>
+            <label>Slug (Identificador único para lógica):</label>
+            <input type="text" wire:model="slug">
+            @error('slug') <span>{{ $message }}</span> @enderror
+        </div>
+        @endif
 
         <div>
             <label>Descripción:</label>
@@ -16,7 +33,7 @@
 
         <div>
             <label>Color:</label>
-            <input type="text" wire:model="color" placeholder="Ej: red, #00FF00">
+            <input type="text" wire:model="color" placeholder="Ej: #3b82f6">
             @error('color') <span>{{ $message }}</span> @enderror
         </div>
 
@@ -32,7 +49,7 @@
         </div>
 
         <div style="margin-top: 10px;">
-            <button type="submit">Actualizar</button>
+            <button type="submit">Actualizar Cargo</button>
             <a href="{{ route('erp.cargo.vista.lista') }}">Cancelar</a>
         </div>
     </form>

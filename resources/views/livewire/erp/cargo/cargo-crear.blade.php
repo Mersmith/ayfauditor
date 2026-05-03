@@ -1,12 +1,29 @@
 <div>
-    <h1>Crear Nuevo Cargo</h1>
+    <h1>Crear Cargo</h1>
 
     <form wire:submit="save">
         <div>
-            <label>Nombre del Cargo:</label>
-            <input type="text" wire:model="nombre">
+            <label>Tipo:</label>
+            <select wire:model.live="tipo">
+                <option value="administrativo">Administrativo (Staff)</option>
+                <option value="auditoria">Auditoría (Rol en Sesión)</option>
+            </select>
+            @error('tipo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Nombre:</label>
+            <input type="text" wire:model.live="nombre">
             @error('nombre') <span>{{ $message }}</span> @enderror
         </div>
+
+        @if($tipo === 'auditoria')
+        <div>
+            <label>Slug (Identificador único para lógica):</label>
+            <input type="text" wire:model="slug" placeholder="ej: dueno, colaborador">
+            @error('slug') <span>{{ $message }}</span> @enderror
+        </div>
+        @endif
 
         <div>
             <label>Descripción:</label>
@@ -16,7 +33,7 @@
 
         <div>
             <label>Color:</label>
-            <input type="text" wire:model="color" placeholder="Ej: red, #00FF00">
+            <input type="text" wire:model="color" placeholder="Ej: #3b82f6">
             @error('color') <span>{{ $message }}</span> @enderror
         </div>
 
