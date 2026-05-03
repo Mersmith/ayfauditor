@@ -9,19 +9,38 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 #[Layout('layouts.erp')]
 #[Title('Editar Empresa')]
 class EmpresaEditar extends Component
 {
+    use WithFileUploads;
+
     public Empresa $empresa;
 
     public $cliente_id;
+
     public $tipo_documento_empresa_id;
+
     public string $razon_social = '';
+
     public string $nombre_comercial = '';
+
     public string $numero_documento = '';
+
     public string $direccion_fiscal = '';
+
+    public string $telefono = '';
+
+    public string $correo = '';
+
+    public string $website = '';
+
+    public $logo;
+
+    public $escudo;
+
     public bool $activo = true;
 
     public function mount($id)
@@ -33,6 +52,9 @@ class EmpresaEditar extends Component
         $this->nombre_comercial = $this->empresa->nombre_comercial ?? '';
         $this->numero_documento = $this->empresa->numero_documento;
         $this->direccion_fiscal = $this->empresa->direccion_fiscal ?? '';
+        $this->telefono = $this->empresa->telefono ?? '';
+        $this->correo = $this->empresa->correo ?? '';
+        $this->website = $this->empresa->website ?? '';
         $this->activo = $this->empresa->activo;
     }
 
@@ -45,6 +67,11 @@ class EmpresaEditar extends Component
             'nombre_comercial' => ['nullable', 'string', 'max:255'],
             'numero_documento' => ['required', 'string', 'max:20', Rule::unique('empresas', 'numero_documento')->ignore($this->empresa->id)],
             'direccion_fiscal' => ['nullable', 'string'],
+            'telefono' => ['nullable', 'string', 'max:50'],
+            'correo' => ['nullable', 'email', 'max:255'],
+            'website' => ['nullable', 'string', 'max:255'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+            'escudo' => ['nullable', 'image', 'max:2048'],
             'activo' => ['boolean'],
         ];
     }
@@ -60,8 +87,21 @@ class EmpresaEditar extends Component
             'nombre_comercial' => $this->nombre_comercial,
             'numero_documento' => $this->numero_documento,
             'direccion_fiscal' => $this->direccion_fiscal,
+            'telefono' => $this->telefono,
+            'correo' => $this->correo,
+            'website' => $this->website,
             'activo' => $this->activo,
         ]);
+
+        if ($this->logo) {
+            $this->empresa->clearMediaCollection('logo');
+            $this->empresa->addMedia($this->logo)->toMediaCollection('logo');
+        }
+
+        if ($this->escudo) {
+            $this->empresa->clearMediaCollection('escudo');
+            $this->empresa->addMedia($this->escudo)->toMediaCollection('escudo');
+        }
 
         session()->flash('success', 'Empresa actualizada correctamente.');
 
@@ -72,6 +112,7 @@ class EmpresaEditar extends Component
     {
         $this->empresa->delete();
         session()->flash('success', 'Empresa eliminada.');
+
         return $this->redirect(route('erp.empresa.vista.lista'), navigate: true);
     }
 

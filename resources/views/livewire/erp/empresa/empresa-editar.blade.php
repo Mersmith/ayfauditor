@@ -49,6 +49,46 @@
         </div>
 
         <div>
+            <label>Teléfono:</label>
+            <input type="text" wire:model="telefono">
+            @error('telefono') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Correo Electrónico:</label>
+            <input type="email" wire:model="correo">
+            @error('correo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Sitio Web:</label>
+            <input type="text" wire:model="website">
+            @error('website') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Logo Actual:</label>
+            @if ($empresa->hasMedia('logo'))
+                <img src="{{ $empresa->getFirstMediaUrl('logo') }}" alt="Logo" style="width: 100px; height: 100px; object-fit: contain;">
+            @else
+                <p>No tiene logo</p>
+            @endif
+            <input type="file" wire:model="logo" accept="image/*">
+            @error('logo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Escudo Actual:</label>
+            @if ($empresa->hasMedia('escudo'))
+                <img src="{{ $empresa->getFirstMediaUrl('escudo') }}" alt="Escudo" style="width: 100px; height: 100px; object-fit: contain;">
+            @else
+                <p>No tiene escudo</p>
+            @endif
+            <input type="file" wire:model="escudo" accept="image/*">
+            @error('escudo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <label>Activo:</label>
             <input type="checkbox" wire:model="activo">
         </div>

@@ -49,6 +49,36 @@
         </div>
 
         <div>
+            <label>Teléfono:</label>
+            <input type="text" wire:model="telefono">
+            @error('telefono') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Correo Electrónico:</label>
+            <input type="email" wire:model="correo">
+            @error('correo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Sitio Web:</label>
+            <input type="text" wire:model="website">
+            @error('website') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Logo:</label>
+            <input type="file" wire:model="logo" accept="image/*">
+            @error('logo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label>Escudo:</label>
+            <input type="file" wire:model="escudo" accept="image/*">
+            @error('escudo') <span>{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <label>Activo:</label>
             <input type="checkbox" wire:model="activo">
         </div>

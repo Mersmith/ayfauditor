@@ -25,6 +25,9 @@ class EmpresaSeeder extends Seeder
                 'nombre_comercial' => 'Perez Construe',
                 'numero_documento' => '20123456789',
                 'direccion_fiscal' => 'Av. Siempre Viva 123',
+                'telefono' => '987654321',
+                'correo' => 'contacto@perezconstrucciones.com',
+                'website' => 'www.perezconstrucciones.com',
                 'activo' => true,
             ]);
 
@@ -35,6 +38,9 @@ class EmpresaSeeder extends Seeder
                 'nombre_comercial' => 'Perez Trans',
                 'numero_documento' => '20987654321',
                 'direccion_fiscal' => 'Calle Falsa 456',
+                'telefono' => '912345678',
+                'correo' => 'ventas@pereztransportes.com',
+                'website' => 'www.pereztransportes.com',
                 'activo' => true,
             ]);
         }

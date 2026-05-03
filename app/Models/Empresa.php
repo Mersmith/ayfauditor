@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use Database\Factories\EmpresaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Empresa extends Model
+class Empresa extends Model implements HasMedia
 {
-    /** @use HasFactory<\Database\Factories\EmpresaFactory> */
-    use HasFactory, SoftDeletes;
+    /** @use HasFactory<EmpresaFactory> */
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'cliente_id',
@@ -20,6 +23,9 @@ class Empresa extends Model
         'nombre_comercial',
         'numero_documento',
         'direccion_fiscal',
+        'telefono',
+        'correo',
+        'website',
         'activo',
     ];
 

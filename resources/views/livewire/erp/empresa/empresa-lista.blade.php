@@ -12,9 +12,11 @@
     <table border="1">
         <thead>
             <tr>
+                <th>Logo</th>
                 <th>Razón Social</th>
                 <th>Cliente</th>
                 <th>Documento</th>
+                <th>Contacto</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -23,11 +25,22 @@
             @foreach ($empresas as $empresa)
                 <tr>
                     <td>
+                        @if ($empresa->hasMedia('logo'))
+                            <img src="{{ $empresa->getFirstMediaUrl('logo') }}" alt="Logo" style="width: 50px; height: 50px; object-fit: contain;">
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>
                         <strong>{{ $empresa->razon_social }}</strong><br>
                         <small>{{ $empresa->nombre_comercial }}</small>
                     </td>
                     <td>{{ $empresa->cliente->nombre }}</td>
                     <td>{{ $empresa->tipoDocumento->abreviatura }}: {{ $empresa->numero_documento }}</td>
+                    <td>
+                        {{ $empresa->telefono }}<br>
+                        {{ $empresa->correo }}
+                    </td>
                     <td>{{ $empresa->activo ? 'Activo' : 'Inactivo' }}</td>
                     <td>
                         <a href="{{ route('erp.empresa.vista.editar', $empresa->id) }}">Editar</a>

@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -23,8 +24,6 @@ return new class extends Migration {
             $table->string('telefono')->nullable();
             $table->string('correo')->nullable();
             $table->string('website')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('escudo')->nullable();
             $table->boolean('activo')->default(true);
 
             $table->timestamps();
