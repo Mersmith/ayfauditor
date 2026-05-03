@@ -5,26 +5,60 @@ namespace App\Livewire\Erp\Cliente;
 use App\Models\Cliente;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
 #[Title('Editar Cliente')]
 class ClienteEditar extends Component
 {
     public Cliente $cliente;
+
     public User $user;
 
-    // Propiedades para el formulario
-    public string $name = '';
-    public string $email = '';
-    public string $password = ''; // Opcional en edición
-    public string $nombre = '';
-    public string $dni = '';
-    public string $celular = '';
+    public $name;
+
+    public $email;
+
+    public $nombre;
+
+    public $dni;
+
+    public $celular;
+
+    public $activo;
+
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user->id)],
+            'nombre' => 'required|string|max:255',
+            'dni' => ['nullable', 'string', 'max:20', Rule::unique('clientes', 'dni')->ignore($this->cliente->id)->whereNull('deleted_at')],
+            'celular' => 'nullable|string|max:20',
+            'activo' => 'boolean',
+        ];
+    }
+
+    protected function validationAttributes()
+    {
+        return [
+            'name' => 'usuario login',
+            'email' => 'correo electrónico',
+            'nombre' => 'nombre completo',
+            'dni' => 'DNI/RUC',
+            'celular' => 'celular',
+            'activo' => 'estado',
+        ];
+    }
 
     public function mount($id)
     {
@@ -33,58 +67,126 @@ class ClienteEditar extends Component
 
         $this->name = $this->user->name;
         $this->email = $this->user->email;
+        $this->activo = (bool) $this->cliente->activo;
+
         $this->nombre = $this->cliente->nombre;
         $this->dni = $this->cliente->dni ?? '';
         $this->celular = $this->cliente->celular ?? '';
     }
 
-    protected function rules(): array
+    public function update()
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->user->id)],
-            'password' => ['nullable', 'string', 'min:8'],
-            'nombre' => ['required', 'string', 'max:255'],
-            'dni' => ['nullable', 'string', 'max:20', Rule::unique('clientes', 'dni')->ignore($this->cliente->id)->whereNull('deleted_at')],
-            'celular' => ['nullable', 'string', 'max:20'],
-        ];
-    }
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Datos Inválidos',
+                'text' => 'Verifique los campos resaltados.',
+            ]);
+            throw $e;
+        }
 
-    public function update(): void
-    {
-        $this->validate();
+        try {
+            DB::beginTransaction();
 
-        DB::transaction(function () {
-            $userData = [
-                'name' => $this->name,
-                'email' => $this->email,
-            ];
-
-            if ($this->password) {
-                $userData['password'] = Hash::make($this->password);
-            }
-
-            $this->user->update($userData);
+            $this->user->update([
+                'name' => trim($this->name),
+                'email' => strtolower(trim($this->email)),
+                'activo' => $this->activo,
+            ]);
 
             $this->cliente->update([
-                'nombre' => $this->nombre,
-                'dni' => $this->dni,
-                'celular' => $this->celular,
+                'nombre' => trim($this->nombre),
+                'dni' => trim($this->dni),
+                'celular' => trim($this->celular),
+                'activo' => $this->activo,
             ]);
-        });
 
-        session()->flash('success', 'Cliente actualizado correctamente.');
-        $this->redirect(route('erp.cliente.vista.lista'), navigate: true);
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Actualizado!',
+                'text' => 'Los datos del cliente se han actualizado correctamente.',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-cliente')->error('[CLIENTE] Error al actualizar cliente: ' . $e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'target_id' => $this->cliente->id,
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error',
+                'text' => 'No se pudo actualizar el cliente.',
+            ]);
+        }
     }
 
-    public function delete(): void
+    public function enviarRecuperarClave()
     {
-        // El softdelete solo afecta al perfil del cliente en este caso, 
-        // o podrías eliminar también el usuario si lo deseas.
-        $this->cliente->delete();
+        try {
+            $this->validateOnly('email');
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error',
+                'text' => 'El correo electrónico es inválido.',
+            ]);
+            throw $e;
+        }
 
-        session()->flash('success', 'Cliente eliminado (Soft Delete) correctamente.');
-        $this->redirect(route('erp.cliente.vista.lista'), navigate: true);
+        Password::sendResetLink(['email' => $this->email]);
+
+        $this->dispatch('alertaLivewire', [
+            'type' => 'success',
+            'title' => 'Correo Enviado',
+            'text' => 'Se ha enviado un enlace para restablecer la contraseña a ' . $this->email,
+        ]);
+    }
+
+    #[On('eliminarClienteOn')]
+    public function eliminarClienteOn()
+    {
+        try {
+            DB::beginTransaction();
+            $this->cliente->delete();
+            // Opcionalmente eliminar el usuario si no tiene otros perfiles
+            // $this->user->delete();
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => 'Eliminado',
+                'text' => 'El cliente ha sido eliminado correctamente.',
+            ]);
+
+            return redirect()->route('erp.cliente.vista.lista');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-cliente')->error('[CLIENTE] Error al eliminar cliente: ' . $e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'target_id' => $this->cliente->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error',
+                'text' => 'No se pudo eliminar el cliente.',
+            ]);
+        }
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 
     public function render()
