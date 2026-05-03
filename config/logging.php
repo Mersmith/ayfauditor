@@ -176,6 +176,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-categoria-pregunta' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-categoria-pregunta.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
