@@ -25,6 +25,7 @@
         <strong>📋 Auditoría:</strong>
         <a href="{{ route('erp.auditoria.vista.lista') }}">Sesiones</a> |
         <a href="{{ route('erp.participante-auditoria.vista.lista') }}">Participantes</a> |
+        <a href="{{ route('erp.respuesta.vista.lista') }}">Ejecución (Respuestas)</a> |
         <a href="{{ route('erp.auditoria.vista.crear') }}">Nueva</a>
 
         &nbsp;&nbsp;||&nbsp;&nbsp;

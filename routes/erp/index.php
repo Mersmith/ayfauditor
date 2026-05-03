@@ -36,6 +36,9 @@ use App\Livewire\Erp\Plantilla\PlantillaLista;
 use App\Livewire\Erp\Pregunta\PreguntaCrear;
 use App\Livewire\Erp\Pregunta\PreguntaEditar;
 use App\Livewire\Erp\Pregunta\PreguntaLista;
+use App\Livewire\Erp\Respuesta\RespuestaCrear;
+use App\Livewire\Erp\Respuesta\RespuestaEditar;
+use App\Livewire\Erp\Respuesta\RespuestaLista;
 use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaCrear;
 use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaEditar;
 use App\Livewire\Erp\TipoDocumentoEmpresa\TipoDocumentoEmpresaLista;
@@ -126,4 +129,10 @@ Route::prefix('estado-respuesta')->name('estado-respuesta.vista.')->group(functi
     Route::get('/', EstadoRespuestaLista::class)->name('lista');
     Route::get('/crear', EstadoRespuestaCrear::class)->name('crear');
     Route::get('/editar/{id}', EstadoRespuestaEditar::class)->name('editar');
+});
+
+Route::prefix('respuesta')->name('respuesta.vista.')->group(function () {
+    Route::get('/', RespuestaLista::class)->name('lista');
+    Route::get('/crear', RespuestaCrear::class)->name('crear');
+    Route::get('/editar/{id}', RespuestaEditar::class)->name('editar');
 });

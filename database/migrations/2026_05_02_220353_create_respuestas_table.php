@@ -19,11 +19,16 @@ return new class extends Migration
 
             $table->text('respuesta_cliente')->nullable();
             $table->foreignId('estado_respuesta_id')->constrained('estado_respuestas');
-            
+
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->foreignId('deleted_by')->nullable()->constrained('users');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
