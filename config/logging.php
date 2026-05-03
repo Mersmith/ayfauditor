@@ -197,6 +197,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-estado-auditoria' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-estado-auditoria.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
