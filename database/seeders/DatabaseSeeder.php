@@ -21,6 +21,12 @@ class DatabaseSeeder extends Seeder
             PersonalSeeder::class,
             PersonalEmpresaSeeder::class,
             TrabajadorSeeder::class,
+            CategoriaPreguntaSeeder::class,
+            EstadoAuditoriaSeeder::class,
+            RolAuditoriaSeeder::class,
+            EstadoRespuestaSeeder::class,
+            PreguntaSeeder::class,
+            PlantillaSeeder::class,
         ]);
     }
 }
