@@ -89,7 +89,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
@@ -127,10 +127,16 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
-
         'erp-cliente' => [
             'driver' => 'daily',
             'path' => storage_path('logs/erp-cliente.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
+        'erp-empresa' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-empresa.log'),
             'level' => 'debug',
             'days' => 14,
         ],
