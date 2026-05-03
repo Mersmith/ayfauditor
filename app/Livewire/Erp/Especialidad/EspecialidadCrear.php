@@ -3,51 +3,115 @@
 namespace App\Livewire\Erp\Especialidad;
 
 use App\Models\Especialidad;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.erp')]
-#[Title('Crear Especialidad')]
+#[Lazy]
+#[Layout('layouts.erp.layout-erp')]
+#[Title('Registrar Especialidad')]
 class EspecialidadCrear extends Component
 {
-    public string $nombre = '';
+    public $nombre = '';
 
-    public string $descripcion = '';
+    public $descripcion = '';
 
-    public string $color = '';
+    public $color = '#3b82f6';
 
-    public string $icono = '';
+    public $icono = 'fa-solid fa-graduation-cap';
 
-    public bool $activo = true;
+    public $activo = true;
 
-    protected $rules = [
-        'nombre' => 'required|string|max:255|unique:especialidads,nombre',
-        'descripcion' => 'nullable|string',
-        'color' => 'nullable|string|max:50',
-        'icono' => 'nullable|string|max:100',
-        'activo' => 'boolean',
-    ];
-
-    public function save()
+    protected function rules()
     {
-        $this->validate();
+        return [
+            'nombre' => 'required|string|max:255|unique:especialidads,nombre',
+            'descripcion' => 'nullable|string',
+            'color' => 'nullable|string|max:50',
+            'icono' => 'nullable|string|max:100',
+            'activo' => 'required|boolean',
+        ];
+    }
 
-        Especialidad::create([
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
-            'color' => $this->color,
-            'icono' => $this->icono,
-            'activo' => $this->activo,
-        ]);
+    public function validationAttributes()
+    {
+        return [
+            'nombre' => 'nombre de la especialidad',
+            'color' => 'color identificador',
+            'icono' => 'icono',
+        ];
+    }
 
-        session()->flash('success', 'Especialidad creada correctamente.');
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-        return $this->redirect(route('erp.especialidad.vista.lista'), navigate: true);
+    public function store()
+    {
+        // $this->authorize('especialidad.crear');
+
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('alertaLivewire', [
+                'type' => 'warning',
+                'title' => 'Datos Incompletos',
+                'text' => 'Verifique los errores en los campos resaltados.',
+            ]);
+            throw $e;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            Especialidad::create([
+                'nombre' => trim($this->nombre),
+                'descripcion' => trim($this->descripcion) ?: null,
+                'color' => $this->color ?: null,
+                'icono' => $this->icono ?: null,
+                'activo' => $this->activo,
+            ]);
+
+            DB::commit();
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'success',
+                'title' => '¡Éxito!',
+                'text' => 'La especialidad se ha registrado correctamente.',
+            ]);
+
+            return redirect()->route('erp.especialidad.vista.lista');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('erp-especialidad')->error('[ESPECIALIDAD] Error al crear: '.$e->getMessage(), [
+                'usuario_id' => auth()->id(),
+                'datos' => $this->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->dispatch('alertaLivewire', [
+                'type' => 'error',
+                'title' => 'Error Crítico',
+                'text' => 'No se pudo registrar la especialidad. Intente nuevamente.',
+            ]);
+        }
     }
 
     public function render()
     {
         return view('livewire.erp.especialidad.especialidad-crear');
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <x-placeholder />
+        HTML;
     }
 }

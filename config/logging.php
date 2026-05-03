@@ -169,6 +169,13 @@ return [
             'days' => 14,
         ],
 
+        'erp-especialidad' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/erp-especialidad.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
     ],
 
 ];
