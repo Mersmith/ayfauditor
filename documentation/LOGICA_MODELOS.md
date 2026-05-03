@@ -72,6 +72,7 @@ php artisan make:model Respuesta -mfsc
 php artisan make:livewire erp.respuesta.respuesta-lista --class
 php artisan make:livewire erp.respuesta.respuesta-crear --class
 php artisan make:livewire erp.respuesta.respuesta-editar --class
+php artisan make:livewire erp.respuesta.respuesta-comentario --class
 
 php artisan make:model ComentarioRespuesta -mfsc
 php artisan make:livewire erp.comentario-respuesta.comentario-respuesta-lista --class

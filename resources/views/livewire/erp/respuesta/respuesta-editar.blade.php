@@ -43,8 +43,12 @@
     <hr style="margin-top: 20px;">
     <div style="background-color: #fee; padding: 10px;">
         <h3>Zona Peligrosa</h3>
-        <button type="button" onclick="confirm('¿Eliminar esta respuesta?') || event.stopImmediatePropagation()" wire:click="delete" style="color: red;">
+        <button type="button" onclick="confirm('¿Eliminar esta respuesta?') || event.stopImmediatePropagation()"
+            wire:click="delete" style="color: red;">
             Eliminar Registro
         </button>
     </div>
+
+    @livewire('erp.respuesta.respuesta-comentario', ['respuesta' => $respuesta])
+
 </div>

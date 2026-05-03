@@ -31,6 +31,13 @@ class RespuestaSeeder extends Seeder
                     'fecha_fin' => now()->format('Y-m-d'),
                     'updated_by' => $adminUser?->id,
                 ]);
+
+                // Agregar un comentario interno
+                $resp->comentarios()->create([
+                    'user_id' => $adminUser?->id,
+                    'mensaje' => 'La política está completa pero falta la firma del gerente de IT.',
+                    'leido' => true,
+                ]);
             }
         }
     }
