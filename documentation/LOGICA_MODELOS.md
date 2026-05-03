@@ -58,7 +58,6 @@ php artisan make:livewire erp.auditoria.auditoria-lista --class
 php artisan make:livewire erp.auditoria.auditoria-crear --class
 php artisan make:livewire erp.auditoria.auditoria-editar --class
 
-
 php artisan make:model Respuesta -mfsc
 php artisan make:livewire erp.respuesta.respuesta-lista --class
 php artisan make:livewire erp.respuesta.respuesta-crear --class

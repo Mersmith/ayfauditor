@@ -22,6 +22,12 @@
         
         &nbsp;&nbsp;||&nbsp;&nbsp;
 
+        <strong>📋 Auditoría:</strong>
+        <a href="{{ route('erp.auditoria.vista.lista') }}">Sesiones</a> |
+        <a href="{{ route('erp.auditoria.vista.crear') }}">Nueva</a>
+
+        &nbsp;&nbsp;||&nbsp;&nbsp;
+
         <strong>⚙️ Configuración:</strong>
         <a href="{{ route('erp.trabajador.vista.lista') }}">Equipo (Auditores)</a> |
         <a href="{{ route('erp.tipo-documento-empresa.vista.lista') }}">Tipos Documento</a> |

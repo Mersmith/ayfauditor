@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Erp\Auditoria\AuditoriaCrear;
+use App\Livewire\Erp\Auditoria\AuditoriaEditar;
+use App\Livewire\Erp\Auditoria\AuditoriaLista;
 use App\Livewire\Erp\Cargo\CargoCrear;
 use App\Livewire\Erp\Cargo\CargoEditar;
 use App\Livewire\Erp\Cargo\CargoLista;
@@ -99,4 +102,10 @@ Route::prefix('estado-auditoria')->name('estado-auditoria.vista.')->group(functi
     Route::get('/', EstadoAuditoriaLista::class)->name('lista');
     Route::get('/crear', EstadoAuditoriaCrear::class)->name('crear');
     Route::get('/editar/{id}', EstadoAuditoriaEditar::class)->name('editar');
+});
+
+Route::prefix('auditoria')->name('auditoria.vista.')->group(function () {
+    Route::get('/', AuditoriaLista::class)->name('lista');
+    Route::get('/crear', AuditoriaCrear::class)->name('crear');
+    Route::get('/editar/{id}', AuditoriaEditar::class)->name('editar');
 });
