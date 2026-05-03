@@ -76,6 +76,7 @@
                         <th>DNI</th>
                         <th>Celular</th>
                         <th>Usuario (Login)</th>
+                        <th class="g_celda_centro">Verificado</th>
                         <th class="g_celda_centro">Activo</th>
                         <th class="g_celda_centro">Acciones</th>
                     </tr>
@@ -93,6 +94,14 @@
                                     <span class="g_badge info">{{ $item->user->email }}</span>
                                 @else
                                     <span class="g_badge light">Sin usuario</span>
+                                @endif
+                            </td>
+
+                            <td class="g_celda_centro">
+                                @if($item->user && $item->user->email_verified_at)
+                                    <span class="g_badge success">SÍ</span>
+                                @else
+                                    <span class="g_badge danger">NO</span>
                                 @endif
                             </td>
 

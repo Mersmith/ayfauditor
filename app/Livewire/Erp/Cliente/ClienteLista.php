@@ -52,7 +52,7 @@ class ClienteLista extends Component
                 page: $this->getPage(),
                 todo: false
             ),
-            'clientes_filtrados_' . now()->format('Y-m-d_H-i') . '.xlsx'
+            'clientes_filtrados_'.now()->format('Y-m-d_H-i').'.xlsx'
         );
     }
 
@@ -62,14 +62,14 @@ class ClienteLista extends Component
             new ClientesExport(
                 todo: true
             ),
-            'clientes_completos_' . now()->format('Y-m-d_H-i') . '.xlsx'
+            'clientes_completos_'.now()->format('Y-m-d_H-i').'.xlsx'
         );
     }
 
     public function render()
     {
         $items = Cliente::query()
-            ->with('user')
+            ->with(['user:id,email,email_verified_at,activo'])
             ->when($this->buscar !== '', function ($q) {
                 $q->where(function ($query) {
                     $query->where('nombre', 'like', "%{$this->buscar}%")
@@ -77,8 +77,8 @@ class ClienteLista extends Component
                         ->orWhere('celular', 'like', "%{$this->buscar}%");
                 });
             })
-            ->when($this->activo !== '', fn($q) => $q->where('activo', $this->activo))
-            ->latest()
+            ->when($this->activo !== '', fn ($q) => $q->where('activo', $this->activo))
+            ->orderBy('nombre')
             ->paginate($this->perPage);
 
         return view('livewire.erp.cliente.cliente-lista', compact('items'));
